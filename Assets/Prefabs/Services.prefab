@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96184145}
   - component: {fileID: 96184146}
+  - component: {fileID: 96184147}
   m_Layer: 0
   m_Name: UIService
   m_TagString: Untagged
@@ -44,6 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69567ca4f665241d690aa32c544b98a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &96184147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96184144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 1618c57e2cb9f46efae5b2781ce45d9d, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 1bfe3ca4f90854fec92a1f3bad93b9fa, type: 3}
+  m_SortingOrder: 0
 --- !u!1 &4726112982377704190
 GameObject:
   m_ObjectHideFlags: 0
