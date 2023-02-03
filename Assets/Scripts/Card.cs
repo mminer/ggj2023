@@ -1,7 +1,7 @@
 /// <summary>
 /// Actions for the hero to follow.
 /// </summary>
-public enum Command
+public enum Card
 {
     DoNothing,
     MoveEast,

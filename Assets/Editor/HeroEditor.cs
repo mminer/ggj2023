@@ -4,7 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(Hero))]
 public class HeroEditor : Editor
 {
-    Command command;
+    Card card;
 
     public override void OnInspectorGUI()
     {
@@ -12,12 +12,12 @@ public class HeroEditor : Editor
 
         using (new EditorGUILayout.HorizontalScope())
         {
-            command = (Command)EditorGUILayout.EnumPopup(command);
+            card = (Card)EditorGUILayout.EnumPopup(card);
 
-            if (GUILayout.Button("Run Command"))
+            if (GUILayout.Button("Play Card"))
             {
                 var hero = target as Hero;
-                hero.RunCommand(command);
+                hero.PlayCard(card);
             }
         }
     }

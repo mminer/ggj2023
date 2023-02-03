@@ -4,43 +4,43 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    public void RunCommands(IEnumerable<Command> commands)
+    public void PlayCards(IEnumerable<Card> cards)
     {
-        foreach (var command in commands)
+        foreach (var card in cards)
         {
-            RunCommand(command);
+            PlayCard(card);
         }
     }
 
-    public void RunCommand(Command command)
+    public void PlayCard(Card card)
     {
-        Debug.Log($"Running command: {command}");
+        Debug.Log($"Playing card: {card}");
 
-        switch (command)
+        switch (card)
         {
-            case Command.DoNothing:
+            case Card.DoNothing:
                 break;
 
-            // TODO: check that movement commands are allowed
+            // TODO: check that movement cards are allowed
 
-            case Command.MoveEast:
+            case Card.MoveEast:
                 transform.position += Vector3.right;
                 break;
 
-            case Command.MoveNorth:
+            case Card.MoveNorth:
                 transform.position += Vector3.forward;
                 break;
 
-            case Command.MoveSouth:
+            case Card.MoveSouth:
                 transform.position += Vector3.back;
                 break;
 
-            case Command.MoveWest:
+            case Card.MoveWest:
                 transform.position += Vector3.back;
                 break;
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(command), command, null);
+                throw new ArgumentOutOfRangeException(nameof(card), card, null);
         }
     }
 }
