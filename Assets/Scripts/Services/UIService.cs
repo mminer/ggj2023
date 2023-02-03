@@ -3,18 +3,21 @@ using UnityEngine.UIElements;
 
 public class UIService : Services.Service
 {
-    [SerializeField] GameEvent gameStartEvent;
+    UIDocument[] uiDocuments;
 
     void Awake()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        uiDocuments = GetComponentsInChildren<UIDocument>();
+    }
 
-        var startGameButton = root.Q<Button>("start-game");
-
-        startGameButton.clicked += () =>
+    public void ShowUI(UIDocument ui)
+    {
+        foreach (var otherUI in uiDocuments)
         {
-            startGameButton.visible = false;
-            gameStartEvent.Invoke();
-        };
+            otherUI.gameObject.SetActive(false);
+        }
+
+        Debug.Log($"Showing UI: {ui.name}");
+        ui.gameObject.SetActive(true);
     }
 }
