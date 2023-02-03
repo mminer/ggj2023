@@ -21,6 +21,8 @@ public class Hero : MonoBehaviour
             case Command.DoNothing:
                 break;
 
+            // TODO: check that movement commands are allowed
+
             case Command.MoveEast:
                 transform.position += Vector3.right;
                 break;

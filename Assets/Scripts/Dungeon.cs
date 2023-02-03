@@ -1,5 +1,6 @@
 using RogueSharp;
 using RogueSharp.MapCreation;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -12,9 +13,9 @@ public class Dungeon
 
     public Cell this[Vector3Int position] => map[position];
 
-    public Dungeon(int seed, int width, int height, int maxRooms, int roomMaxSize, int roomMinSize)
+    public Dungeon(int randomSeed, int width, int height, int maxRooms, int roomMaxSize, int roomMinSize)
     {
-        rng = new RandomNumberGenerator(seed);
+        rng = new RandomNumberGenerator(randomSeed);
 
         var mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map<Cell>, Cell>(
             width,
@@ -30,5 +31,11 @@ public class Dungeon
     public override string ToString()
     {
         return map.ToString();
+    }
+
+    public Cell GetRandomWalkableCell()
+    {
+        var walkableCells = map.walkableCells.ToArray();
+        return walkableCells[rng.Next(walkableCells.Length)];
     }
 }
