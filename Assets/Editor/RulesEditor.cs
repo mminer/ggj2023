@@ -7,12 +7,12 @@ public class RulesEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        var rules = (Rules)target;
-
         DrawDefaultInspector();
+
         EditorGUILayout.Space();
         GUILayout.Label("Stats", EditorStyles.boldLabel);
 
+        var rules = (Rules)target;
         var deckSize = rules.deck.Sum(cardConfig => cardConfig.count);
         EditorGUILayout.LabelField("Deck Size", deckSize.ToString());
     }
