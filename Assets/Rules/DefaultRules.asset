@@ -24,8 +24,10 @@ MonoBehaviour:
   - card: 2
     count: 2
   - card: 3
-    count: 2
+    count: 1
   - card: 4
+    count: 2
+  - card: 5
     count: 2
   mapWidth: 32
   mapHeight: 32

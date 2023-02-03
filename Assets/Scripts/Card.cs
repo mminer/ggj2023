@@ -6,6 +6,7 @@ public enum Card
     DoNothing,
     MoveEast,
     MoveNorth,
+    MoveRandom,
     MoveSouth,
     MoveWest,
 }

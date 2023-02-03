@@ -24,6 +24,7 @@ public class Rules : ScriptableObject
         new() { card = Card.DoNothing, count = 2 },
         new() { card = Card.MoveEast, count = 2 },
         new() { card = Card.MoveNorth, count = 2 },
+        new() { card = Card.MoveRandom, count = 1 },
         new() { card = Card.MoveSouth, count = 2 },
         new() { card = Card.MoveWest, count = 2 },
     };

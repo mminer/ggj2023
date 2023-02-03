@@ -31,6 +31,10 @@ public class Hero : MonoBehaviour
                 transform.position += Vector3.forward;
                 break;
 
+            case Card.MoveRandom:
+                transform.position += Util.GetRandomDirection();
+                break;
+
             case Card.MoveSouth:
                 transform.position += Vector3.back;
                 break;
