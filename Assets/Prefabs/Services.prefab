@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69567ca4f665241d690aa32c544b98a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStartEvent: {fileID: 11400000, guid: 73954370fb7264cb4940c8fa0d16849a, type: 2}
 --- !u!114 &96184147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e3ccb07bc0044d4a42763b6a24fb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverEvent: {fileID: 11400000, guid: b96eb60648c41463295d57c40df06c6b, type: 2}
 --- !u!1 &4726112982974158526
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4726112982974158527}
   - component: {fileID: 4726112982974158524}
+  - component: {fileID: 1793267159}
   m_Layer: 0
   m_Name: DungeonService
   m_TagString: Untagged
@@ -155,6 +158,34 @@ MonoBehaviour:
   heroPrefab: {fileID: 1448780956659128096, guid: 5f0b41bc63fff4cae98134148d57ff12, type: 3}
   groundPrefab: {fileID: 7106692325434393316, guid: 1c0fb87a3533d4590af6662528e9a17f, type: 3}
   wallPrefab: {fileID: 3265183543092376448, guid: 449c324aa3c3448e7a7b2352a3d7b13d, type: 3}
+--- !u!114 &1793267159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4726112982974158526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73954370fb7264cb4940c8fa0d16849a, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4726112982974158524}
+        m_TargetAssemblyTypeName: DungeonService, Assembly-CSharp
+        m_MethodName: GenerateDungeon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4726112983059556439
 GameObject:
   m_ObjectHideFlags: 0
