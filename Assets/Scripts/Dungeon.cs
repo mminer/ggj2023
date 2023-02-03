@@ -13,16 +13,16 @@ public class Dungeon
 
     public Cell this[Vector3Int position] => map[position];
 
-    public Dungeon(int randomSeed, int width, int height, int maxRooms, int roomMaxSize, int roomMinSize)
+    public Dungeon(int randomSeed, Rules rules)
     {
         rng = new RandomNumberGenerator(randomSeed);
 
         var mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map<Cell>, Cell>(
-            width,
-            height,
-            maxRooms,
-            roomMaxSize,
-            roomMinSize,
+            rules.mapWidth,
+            rules.mapHeight,
+            rules.maxRooms,
+            rules.roomMaxSize,
+            rules.roomMinSize,
             rng);
 
         map = Map.Create(mapCreationStrategy);

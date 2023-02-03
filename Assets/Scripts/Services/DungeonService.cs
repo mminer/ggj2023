@@ -3,15 +3,10 @@ using UnityEngine;
 
 public class DungeonService : Services.Service
 {
-    [SerializeField] int enemyCount = 4;
-    [SerializeField] int randomSeed = 42;
+    [SerializeField] Rules rules;
 
-    [Header("Map")]
-    [SerializeField] int width = 32;
-    [SerializeField] int height = 32;
-    [SerializeField] int maxRooms = 30;
-    [SerializeField] int roomMaxSize = 10;
-    [SerializeField] int roomMinSize = 3;
+    // FIXME: Temporary. We'll pull this from a game code.
+    [SerializeField] int randomSeed = 42;
 
     [Header("Character Prefabs")]
     [SerializeField] Transform enemyPrefab;
@@ -28,14 +23,14 @@ public class DungeonService : Services.Service
 
     public void GenerateDungeon()
     {
-        dungeon = new Dungeon(randomSeed, width, height, maxRooms, roomMaxSize, roomMinSize);
+        dungeon = new Dungeon(randomSeed, rules);
         Debug.Log("Dungeon:\n" + dungeon);
 
         // Spawn cell prefabs:
 
-        for (var x = 0; x < width; x++)
+        for (var x = 0; x < rules.mapWidth; x++)
         {
-            for (var z = 0; z < height; z++)
+            for (var z = 0; z < rules.mapHeight; z++)
             {
                 var position = new Vector3Int(x, 0, z);
                 var cell = dungeon[position];
@@ -54,7 +49,7 @@ public class DungeonService : Services.Service
 
         var enemyPositions = new HashSet<Vector3Int>();
 
-        for (var i = 0; i < enemyCount; i++)
+        for (var i = 0; i < rules.enemyCount; i++)
         {
             Cell enemyCell;
 

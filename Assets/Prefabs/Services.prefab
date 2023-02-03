@@ -149,13 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d0036f7bef944f6addb2c76d6e7b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 4
+  rules: {fileID: 11400000, guid: 9d11f16597d744ae0bec957909f87a53, type: 2}
   randomSeed: 42
-  width: 32
-  height: 32
-  maxRooms: 30
-  roomMaxSize: 10
-  roomMinSize: 3
   enemyPrefab: {fileID: 4847469896996707970, guid: 1817bd08da758437c8dd8afbdb01cbeb, type: 3}
   heroPrefab: {fileID: 1448780956659128096, guid: 5f0b41bc63fff4cae98134148d57ff12, type: 3}
   groundPrefab: {fileID: 7106692325434393316, guid: 1c0fb87a3533d4590af6662528e9a17f, type: 3}
