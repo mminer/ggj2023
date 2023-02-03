@@ -159,6 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1448780956659128096}
   - component: {fileID: 2256525747624922521}
+  - component: {fileID: 1315352431}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -180,7 +181,7 @@ Transform:
   m_Children:
   - {fileID: 2463531848429150512}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2256525747624922521
 Animator:
@@ -202,6 +203,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1315352431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256525747624922522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a2a9a378b114b6a9e5f64e5214d034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2400752345994029802
 GameObject:
   m_ObjectHideFlags: 0
