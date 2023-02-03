@@ -155,6 +155,8 @@ MonoBehaviour:
   maxRooms: 30
   roomMaxSize: 10
   roomMinSize: 3
+  groundPrefab: {fileID: 7106692325434393316, guid: 1c0fb87a3533d4590af6662528e9a17f, type: 3}
+  wallPrefab: {fileID: 3265183543092376448, guid: 449c324aa3c3448e7a7b2352a3d7b13d, type: 3}
 --- !u!1 &4726112983059556439
 GameObject:
   m_ObjectHideFlags: 0

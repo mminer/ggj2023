@@ -7,13 +7,10 @@ using UnityEngine;
 /// </summary>
 public class Dungeon
 {
-    public class Cell : RogueSharp.Cell
-    {
-        public Vector3Int Position => new(X, 0, Y);
-    }
-
     readonly Map<Cell> map;
     readonly RandomNumberGenerator rng;
+
+    public Cell this[Vector3Int position] => map[position];
 
     public Dungeon(int seed, int width, int height, int maxRooms, int roomMaxSize, int roomMinSize)
     {
@@ -28,6 +25,10 @@ public class Dungeon
             rng);
 
         map = Map.Create(mapCreationStrategy);
-        Debug.Log("Dungeon map:\n" + map);
+    }
+
+    public override string ToString()
+    {
+        return map.ToString();
     }
 }
