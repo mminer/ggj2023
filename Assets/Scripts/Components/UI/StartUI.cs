@@ -12,6 +12,7 @@ public class StartUI : MonoBehaviour
 
         root.Q<Button>("start-game").clicked += () =>
         {
+            // This is the only time outside RandomNumberGenerator we should use UnityEngine.Random directly.
             gameState.randomSeed = Random.Range(0, Rules.maxRandomSeed);
             gameState.localPlayer = Player.Player1;
             gameStartEvent.Invoke();
