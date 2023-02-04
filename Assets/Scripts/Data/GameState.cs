@@ -7,19 +7,15 @@ public class GameState : ScriptableObject
 {
     [SerializeField] public Rules rules;
 
-    // Cards:
+    // Random Number Generation:
 
-    public readonly Stack<Card> deck = new();
-    public readonly Stack<Card> discardPile = new();
-    public readonly List<Card> player1Hand = new();
-    public readonly List<Card> player2Hand = new();
-
-    public IEnumerable<Card> localHand => localPlayer switch
+    public int randomSeed
     {
-        Player.Player1 => player1Hand,
-        Player.Player2 => player2Hand,
-        _ => Array.Empty<Card>(),
-    };
+        get => rng?.randomSeed ?? -1;
+        set => rng = new RandomNumberGenerator(value);
+    }
+
+    public RandomNumberGenerator rng { get; private set; }
 
     // Players:
 
@@ -34,13 +30,17 @@ public class GameState : ScriptableObject
 
     public Player? playerThatGoesFirst { get; set; }
 
-    // Random Number Generation:
+    // Cards:
 
-    public int randomSeed
+    public readonly Stack<Card> deck = new();
+    public readonly Stack<Card> discardPile = new();
+    public readonly List<Card> player1Hand = new();
+    public readonly List<Card> player2Hand = new();
+
+    public IEnumerable<Card> localHand => localPlayer switch
     {
-        get => rng?.randomSeed ?? -1;
-        set => rng = new RandomNumberGenerator(value);
-    }
-
-    public RandomNumberGenerator rng { get; private set; }
+        Player.Player1 => player1Hand,
+        Player.Player2 => player2Hand,
+        _ => Array.Empty<Card>(),
+    };
 }

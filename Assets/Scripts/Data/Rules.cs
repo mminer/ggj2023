@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -30,6 +31,8 @@ public class Rules : ScriptableObject
         new() { card = Card.MoveSouth, count = 2 },
         new() { card = Card.MoveWest, count = 2 },
     };
+
+    public int deckSize => deckConfig.Sum(cardConfig => cardConfig.count);
 
     [Header("Map")]
     public int mapWidth = 32;
