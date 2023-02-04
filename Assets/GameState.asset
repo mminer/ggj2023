@@ -13,7 +13,3 @@ MonoBehaviour:
   m_Name: GameState
   m_EditorClassIdentifier: 
   rules: {fileID: 11400000, guid: 9d11f16597d744ae0bec957909f87a53, type: 2}
-  randomSeed: 0
-  cardsUpdatedEvent: {fileID: 11400000, guid: f8d417f3123d24ac392117bdf9f97c2a, type: 2}
-  player1Phase: 0
-  player2Phase: 0

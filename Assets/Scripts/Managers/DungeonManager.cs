@@ -72,6 +72,6 @@ public class DungeonManager : MonoBehaviour
         } while (enemyPositions.Contains(heroCell.position));
 
         hero = Instantiate(heroPrefab, heroCell.position, Quaternion.identity, transform);
-        hero.gameState = gameState;
+        hero.rng = gameState.rng;
     }
 }

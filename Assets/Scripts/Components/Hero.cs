@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    public GameState gameState { private get; set; }
+    public RandomNumberGenerator rng { private get; set; }
 
     public void PlayCards(IEnumerable<Card> cards)
     {
@@ -34,7 +34,7 @@ public class Hero : MonoBehaviour
                 break;
 
             case Card.MoveRandom:
-                transform.position += MiscUtility.GetRandomDirection(gameState.rng);
+                transform.position += MiscUtility.GetRandomDirection(rng);
                 break;
 
             case Card.MoveSouth:

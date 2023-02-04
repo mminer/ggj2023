@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e3ccb07bc0044d4a42763b6a24fb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+  cardsUpdatedEvent: {fileID: 11400000, guid: f8d417f3123d24ac392117bdf9f97c2a, type: 2}
 --- !u!114 &244738455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,9 +412,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
-        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
-        m_MethodName: Init
+      - m_Target: {fileID: 4726112982377704188}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ShuffleDeckAndDealHands
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
