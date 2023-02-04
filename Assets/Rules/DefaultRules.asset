@@ -16,7 +16,7 @@ MonoBehaviour:
   allowedDiscards: 1
   handSize: 5
   queueSize: 3
-  deck:
+  deckConfig:
   - card: 0
     count: 2
   - card: 1

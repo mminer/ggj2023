@@ -320,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e3ccb07bc0044d4a42763b6a24fb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   gameOverEvent: {fileID: 11400000, guid: b96eb60648c41463295d57c40df06c6b, type: 2}
 --- !u!1 &4726112982974158526
 GameObject:
@@ -366,8 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d0036f7bef944f6addb2c76d6e7b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rules: {fileID: 11400000, guid: 9d11f16597d744ae0bec957909f87a53, type: 2}
-  randomSeed: 42
+  gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   enemyPrefab: {fileID: 4847469896996707970, guid: 1817bd08da758437c8dd8afbdb01cbeb, type: 3}
   heroPrefab: {fileID: 1448780956659128096, guid: 5f0b41bc63fff4cae98134148d57ff12, type: 3}
   groundPrefab: {fileID: 7106692325434393316, guid: 1c0fb87a3533d4590af6662528e9a17f, type: 3}

@@ -13,7 +13,7 @@ public class RulesEditor : Editor
         GUILayout.Label("Stats", EditorStyles.boldLabel);
 
         var rules = (Rules)target;
-        var deckSize = rules.deck.Sum(cardConfig => cardConfig.count);
+        var deckSize = rules.deckConfig.Sum(cardConfig => cardConfig.count);
         EditorGUILayout.LabelField("Deck Size", deckSize.ToString());
     }
 }

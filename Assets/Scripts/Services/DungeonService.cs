@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class DungeonService : Services.Service
 {
-    [SerializeField] Rules rules;
-
-    // FIXME: Temporary. We'll pull this from a game code.
-    [SerializeField] int randomSeed = 42;
+    [SerializeField] GameState gameState;
 
     [Header("Character Prefabs")]
     [SerializeField] Transform enemyPrefab;
@@ -23,14 +20,14 @@ public class DungeonService : Services.Service
 
     public void GenerateDungeon()
     {
-        dungeon = new Dungeon(randomSeed, rules);
+        dungeon = new Dungeon(gameState.randomSeed, gameState.rules);
         Debug.Log("Dungeon:\n" + dungeon);
 
         // Spawn cell prefabs:
 
-        for (var x = 0; x < rules.mapWidth; x++)
+        for (var x = 0; x < gameState.rules.mapWidth; x++)
         {
-            for (var z = 0; z < rules.mapHeight; z++)
+            for (var z = 0; z < gameState.rules.mapHeight; z++)
             {
                 var position = new Vector3Int(x, 0, z);
                 var cell = dungeon[position];
@@ -49,7 +46,7 @@ public class DungeonService : Services.Service
 
         var enemyPositions = new HashSet<Vector3Int>();
 
-        for (var i = 0; i < rules.enemyCount; i++)
+        for (var i = 0; i < gameState.rules.enemyCount; i++)
         {
             Cell enemyCell;
 

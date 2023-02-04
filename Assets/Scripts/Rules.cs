@@ -19,7 +19,7 @@ public class Rules : ScriptableObject
     public int queueSize = 3;
 
     [Space]
-    public CardConfig[] deck =
+    public CardConfig[] deckConfig =
     {
         new() { card = Card.DoNothing, count = 2 },
         new() { card = Card.MoveEast, count = 2 },
