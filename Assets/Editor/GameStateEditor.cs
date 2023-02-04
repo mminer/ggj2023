@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,10 +10,17 @@ public class GameStateEditor : Editor
         DrawDefaultInspector();
         var gameState = (GameState)target;
 
-        EditorGUILayout.Space();
-        GUILayout.Label("Deck", EditorStyles.boldLabel);
+        PrintCards("Deck", gameState.deck);
+        PrintCards("Player 1 Hand", gameState.player1Hand);
+        PrintCards("Player 2 Hand", gameState.player2Hand);
+    }
 
-        foreach (var card in gameState.deck)
+    static void PrintCards(string label, IEnumerable<Card> cards)
+    {
+        EditorGUILayout.Space();
+        GUILayout.Label(label, EditorStyles.boldLabel);
+
+        foreach (var card in cards)
         {
             GUILayout.Label(card.ToString());
         }
