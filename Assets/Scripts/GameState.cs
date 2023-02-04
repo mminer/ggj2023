@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,16 +6,26 @@ using UnityEngine;
 [CreateAssetMenu]
 public class GameState : ScriptableObject
 {
-    public Rules rules;
-    public int randomSeed;
+    [SerializeField] public Rules rules;
+    [SerializeField] public int randomSeed;
 
-    public Player? localPlayer;
+    [SerializeField] GameEvent cardsUpdatedEvent;
+
+    // TODO: set depending on whether player created or joined game
+    public Player? localPlayer { get; set; }= Player.Player1;
 
     public Player? remotePlayer => localPlayer switch
     {
         Player.Player1 => Player.Player2,
         Player.Player2 => Player.Player1,
         _ => null,
+    };
+
+    public IList<Card> localHand => localPlayer switch
+    {
+        Player.Player1 => player1Hand,
+        Player.Player2 => player2Hand,
+        _ => Array.Empty<Card>(),
     };
 
     public Phase player1Phase;
@@ -47,6 +58,8 @@ public class GameState : ScriptableObject
             player1Hand.Add(deck.Pop());
             player2Hand.Add(deck.Pop());
         }
+
+        cardsUpdatedEvent.Invoke();
     }
 
     public void Discard(List<Card> hand, List<Card> cards)
@@ -58,6 +71,8 @@ public class GameState : ScriptableObject
             hand.Remove(card);
             discardPile.Push(card);
         }
+
+        cardsUpdatedEvent.Invoke();
     }
 
     public void Draw(List<Card> hand)
@@ -71,6 +86,8 @@ public class GameState : ScriptableObject
 
             hand.Add(deck.Pop());
         }
+
+        cardsUpdatedEvent.Invoke();
     }
 
     void ShuffleDiscardPile()

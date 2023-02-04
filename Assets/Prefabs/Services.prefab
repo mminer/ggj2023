@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 108392197}
   - component: {fileID: 108392198}
   m_Layer: 0
-  m_Name: StartGameUI
+  m_Name: StartUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,8 +238,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2099998847}
   - component: {fileID: 2099998848}
+  - component: {fileID: 2099998849}
+  - component: {fileID: 2099998850}
   m_Layer: 0
-  m_Name: PlayingUI
+  m_Name: PlayUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,6 +278,47 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 4c7781e072b9243efbc2513474a5155a, type: 3}
   m_SortingOrder: 0
+--- !u!114 &2099998849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099998846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee356e38af72c42e2b251488ac7819b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+--- !u!114 &2099998850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099998846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f8d417f3123d24ac392117bdf9f97c2a, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2099998849}
+        m_TargetAssemblyTypeName: PlayingUI, Assembly-CSharp
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4726112982377704190
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e3ccb07bc0044d4a42763b6a24fb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   gameOverEvent: {fileID: 11400000, guid: b96eb60648c41463295d57c40df06c6b, type: 2}
 --- !u!114 &244738455
 MonoBehaviour:

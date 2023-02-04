@@ -8,6 +8,8 @@ public class GameEvent : ScriptableObject
 
     public void Invoke()
     {
+        Debug.Log($"Game event: {name}");
+
         for (var i = listeners.Count - 1; i >= 0; i--)
         {
             listeners[i].OnEventInvoked();

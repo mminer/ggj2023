@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StartGameUI : MonoBehaviour
+public class StartUI : MonoBehaviour
 {
     [SerializeField] GameEvent gameStartEvent;
 
