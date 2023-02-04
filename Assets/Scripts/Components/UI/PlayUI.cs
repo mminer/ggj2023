@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,23 +7,58 @@ public class PlayUI : MonoBehaviour
     [SerializeField] GameState gameState;
 
     Label gameCodeLabel;
-    VisualElement handWrapper;
+    VisualElement handContainer;
+    VisualElement queueContainer;
+    Button submitButton;
 
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         gameCodeLabel = root.Q<Label>("game-code");
-        handWrapper = root.Q("hand-wrapper");
+        handContainer = root.Q("hand-container");
+        queueContainer = root.Q("queue-container");
+        submitButton = root.Q<Button>("submit");
+
+        submitButton.clicked += () =>
+        {
+            Debug.Assert(queueContainer.childCount == gameState.rules.queueSize);
+
+            var queuedCards = queueContainer
+                .Children()
+                .Select(child => (Card)child.userData)
+                .ToArray();
+
+            // TODO: submit hand
+        };
+
+        submitButton.SetEnabled(false);
     }
 
     public void RefreshCardUI()
     {
         Debug.Log("Refreshing card UI.");
-        handWrapper.Clear();
+        handContainer.Clear();
 
         foreach (var card in gameState.localHand)
         {
-            handWrapper.Add(new Label(card.ToString()));
+            var cardButton = new Button
+            {
+                text = card.ToString(),
+                userData = card,
+            };
+
+            cardButton.clicked += () =>
+            {
+                var newContainer = handContainer.Contains(cardButton)
+                    ? queueContainer
+                    : handContainer;
+
+                cardButton.RemoveFromHierarchy();
+                newContainer.Add(cardButton);
+                submitButton.SetEnabled(queueContainer.childCount == gameState.rules.queueSize);
+            };
+
+            handContainer.Add(cardButton);
         }
     }
 
