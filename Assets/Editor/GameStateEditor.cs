@@ -8,20 +8,33 @@ public class GameStateEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         var gameState = (GameState)target;
-        var isPlaying = gameState.rng != null;
+        var isGameActive = gameState.rng != null;
 
         CustomEditorUtility.Header("Random Number Generation");
-        EditorGUILayout.LabelField("Random Seed", isPlaying ? gameState.randomSeed.ToString() : "");
-        EditorGUILayout.LabelField("Game Code", isPlaying ? GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed) : "");
+        EditorGUILayout.LabelField("Random Seed", isGameActive ? gameState.randomSeed.ToString() : "");
+        EditorGUILayout.LabelField("Game Code", isGameActive ? GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed) : "");
 
         CustomEditorUtility.Header("Players");
-        EditorGUILayout.LabelField("Local Player", isPlaying ? ObjectNames.NicifyVariableName(gameState.localPlayer.ToString()) : "");
-        EditorGUILayout.LabelField("Remote Player", isPlaying ? ObjectNames.NicifyVariableName(gameState.remotePlayer.ToString()) : "");
+        EditorGUILayout.LabelField("Local Player", isGameActive ? ObjectNames.NicifyVariableName(gameState.localPlayer.ToString()) : "");
+        EditorGUILayout.LabelField("Remote Player", isGameActive ? ObjectNames.NicifyVariableName(gameState.remotePlayer.ToString()) : "");
 
         CustomEditorUtility.Header("Game");
-        EditorGUILayout.LabelField("Phase", isPlaying ? gameState.phase.ToString() : "");
-        EditorGUILayout.LabelField("Player Who Goes First", isPlaying ? ObjectNames.NicifyVariableName(gameState.playerWhoGoesFirst.ToString()) : "");
+        EditorGUILayout.ObjectField("Hero", gameState.hero, gameState.hero != null ? gameState.hero.GetType() : null, false);
+
+        foreach (var enemy in gameState.enemies)
+        {
+            EditorGUILayout.ObjectField(enemy.name, enemy, enemy.GetType(), false);
+        }
+
+        EditorGUILayout.LabelField("Phase", isGameActive ? gameState.phase.ToString() : "");
+        EditorGUILayout.LabelField("Player Who Goes First", isGameActive ? ObjectNames.NicifyVariableName(gameState.playerWhoGoesFirst.ToString()) : "");
 
         PrintCards("Deck", gameState.deck);
         PrintCards("Discard Pile", gameState.discardPile);

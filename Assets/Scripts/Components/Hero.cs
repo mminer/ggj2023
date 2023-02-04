@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    public RandomNumberGenerator rng { private get; set; }
+    public GameState gameState { private get; set; }
 
     public void PlayCards(IEnumerable<Card> cards)
     {
@@ -23,30 +23,41 @@ public class Hero : MonoBehaviour
             case Card.DoNothing:
                 break;
 
-            // TODO: check that movement cards are allowed
-
             case Card.MoveEast:
-                transform.position += Vector3.right;
+                MoveInDirection(Vector3Int.right);
                 break;
 
             case Card.MoveNorth:
-                transform.position += Vector3.forward;
+                MoveInDirection(Vector3Int.forward);
                 break;
 
             case Card.MoveRandom:
-                transform.position += MiscUtility.GetRandomDirection(rng);
+                var randomDirection = MiscUtility.GetRandomDirection(gameState.rng);
+                MoveInDirection(randomDirection);
                 break;
 
             case Card.MoveSouth:
-                transform.position += Vector3.back;
+                MoveInDirection(Vector3Int.back);
                 break;
 
             case Card.MoveWest:
-                transform.position += Vector3.back;
+                MoveInDirection(Vector3Int.left);
                 break;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(card), card, null);
         }
+    }
+
+    void MoveInDirection(Vector3Int direction)
+    {
+        var nextPosition = Vector3Int.RoundToInt(transform.position) + direction;
+
+        if (!gameState.dungeon[nextPosition].IsWalkable)
+        {
+            return;
+        }
+
+        transform.position = nextPosition;
     }
 }

@@ -23,6 +23,9 @@ public class GameState : ScriptableObject
 
     // Game:
 
+    public Dungeon dungeon { get; set; }
+    public readonly List<Transform> enemies = new();
+    public Hero hero { get; set; }
     public Phase phase { get; set; }
     public Player playerWhoGoesFirst { get; set; }
 
