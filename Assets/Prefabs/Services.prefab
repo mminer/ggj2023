@@ -286,6 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4726112982377704191}
   - component: {fileID: 4726112982377704188}
+  - component: {fileID: 244738455}
   m_Layer: 0
   m_Name: GameService
   m_TagString: Untagged
@@ -322,6 +323,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   gameOverEvent: {fileID: 11400000, guid: b96eb60648c41463295d57c40df06c6b, type: 2}
+--- !u!114 &244738455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4726112982377704190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73954370fb7264cb4940c8fa0d16849a, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+        m_TargetAssemblyTypeName: GameState, Assembly-CSharp
+        m_MethodName: Init
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4726112982974158526
 GameObject:
   m_ObjectHideFlags: 0

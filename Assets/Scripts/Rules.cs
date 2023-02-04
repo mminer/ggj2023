@@ -14,7 +14,7 @@ public class Rules : ScriptableObject
     public int enemyCount = 4;
 
     [Header("Cards")]
-    public int allowedDiscards = 1;
+    public int drawCount = 1;
     public int handSize = 5;
     public int queueSize = 3;
 

@@ -10,6 +10,9 @@ public class GameStateEditor : Editor
         DrawDefaultInspector();
         var gameState = (GameState)target;
 
+        EditorGUILayout.LabelField("Local Player", GetPlayerName(gameState.localPlayer));
+        EditorGUILayout.LabelField("Remote Player", GetPlayerName(gameState.remotePlayer));
+
         PrintCards("Deck", gameState.deck);
         PrintCards("Player 1 Hand", gameState.player1Hand);
         PrintCards("Player 2 Hand", gameState.player2Hand);
@@ -24,5 +27,15 @@ public class GameStateEditor : Editor
         {
             GUILayout.Label(card.ToString());
         }
+    }
+
+    static string GetPlayerName(Player? player)
+    {
+        return player switch
+        {
+            Player.Player1 => "Player 1",
+            Player.Player2 => "Player 2",
+            _ => "Unassigned",
+        };
     }
 }
