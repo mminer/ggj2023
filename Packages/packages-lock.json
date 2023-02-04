@@ -14,6 +14,30 @@
         "com.google.external-dependency-manager": "1.2.175"
       }
     },
+    "com.google.firebase.auth": {
+      "version": "file:/Users/Personal/Downloads/com.google.firebase.auth-10.4.0.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.google.firebase.app": "10.4.0"
+      }
+    },
+    "com.google.firebase.database": {
+      "version": "file:/Users/Personal/Downloads/com.google.firebase.database-10.4.0.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.google.firebase.auth": "10.4.0"
+      }
+    },
+    "com.google.firebase.firestore": {
+      "version": "file:/Users/Personal/Downloads/com.google.firebase.firestore-10.4.0.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.google.firebase.app": "10.4.0"
+      }
+    },
     "com.google.firebase.messaging": {
       "version": "file:/Users/Personal/Downloads/com.google.firebase.messaging-10.4.0.tgz",
       "depth": 0,
