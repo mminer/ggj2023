@@ -1,26 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonService : Services.Service
+public class DungeonManager : MonoBehaviour
 {
     [SerializeField] GameState gameState;
 
     [Header("Character Prefabs")]
     [SerializeField] Transform enemyPrefab;
-    [SerializeField] Transform heroPrefab;
+    [SerializeField] Hero heroPrefab;
 
     [Header("Cell Prefabs")]
     [SerializeField] Transform groundPrefab;
     [SerializeField] Transform wallPrefab;
 
     public readonly List<Transform> enemies = new();
-    public Transform hero { get; private set; }
+    public Hero hero { get; private set; }
 
     Dungeon dungeon;
 
     public void GenerateDungeon()
     {
-        dungeon = new Dungeon(gameState.randomSeed, gameState.rules);
+        dungeon = new Dungeon(gameState.rng, gameState.rules);
         Debug.Log("Dungeon:\n" + dungeon);
 
         // Spawn cell prefabs:
@@ -72,5 +72,6 @@ public class DungeonService : Services.Service
         } while (enemyPositions.Contains(heroCell.position));
 
         hero = Instantiate(heroPrefab, heroCell.position, Quaternion.identity, transform);
+        hero.gameState = gameState;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
+    public GameState gameState { private get; set; }
+
     public void PlayCards(IEnumerable<Card> cards)
     {
         foreach (var card in cards)
@@ -32,7 +34,7 @@ public class Hero : MonoBehaviour
                 break;
 
             case Card.MoveRandom:
-                transform.position += Util.GetRandomDirection();
+                transform.position += MiscUtility.GetRandomDirection(gameState.rng);
                 break;
 
             case Card.MoveSouth:

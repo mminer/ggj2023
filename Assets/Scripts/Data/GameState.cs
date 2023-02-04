@@ -7,12 +7,15 @@ using UnityEngine;
 public class GameState : ScriptableObject
 {
     [SerializeField] public Rules rules;
-    [SerializeField] public int randomSeed;
-
     [SerializeField] GameEvent cardsUpdatedEvent;
 
-    // TODO: set depending on whether player created or joined game
-    public Player? localPlayer { get; set; }= Player.Player1;
+    public int randomSeed
+    {
+        get => rng.randomSeed;
+        set => rng = new RandomNumberGenerator(value);
+    }
+
+    public Player? localPlayer { get; set; }
 
     public Player? remotePlayer => localPlayer switch
     {
@@ -21,7 +24,9 @@ public class GameState : ScriptableObject
         _ => null,
     };
 
-    public IList<Card> localHand => localPlayer switch
+    public Player? playerThatGoesFirst { get; set; }
+
+    public IEnumerable<Card> localHand => localPlayer switch
     {
         Player.Player1 => player1Hand,
         Player.Player2 => player2Hand,
@@ -36,6 +41,8 @@ public class GameState : ScriptableObject
     public readonly List<Card> player1Hand = new();
     public readonly List<Card> player2Hand = new();
 
+    public RandomNumberGenerator rng { get; private set; }
+
     public void Init()
     {
         deck.Clear();
@@ -43,11 +50,13 @@ public class GameState : ScriptableObject
         player1Hand.Clear();
         player2Hand.Clear();
 
+        playerThatGoesFirst = rng.NextBool() ? Player.Player1 : Player.Player2;
+
         // Generate deck from rules:
 
         var cards = rules.deckConfig
             .SelectMany(cardConfig => Enumerable.Repeat(cardConfig.card, cardConfig.count))
-            .Shuffle();
+            .Shuffle(rng);
 
         deck.AddRange(cards);
 
@@ -90,9 +99,14 @@ public class GameState : ScriptableObject
         cardsUpdatedEvent.Invoke();
     }
 
+    public void NextRound()
+    {
+        playerThatGoesFirst = playerThatGoesFirst == Player.Player1 ? Player.Player2 : Player.Player1;
+    }
+
     void ShuffleDiscardPile()
     {
-        var cards = discardPile.Shuffle();
+        var cards = discardPile.Shuffle(rng);
         deck.AddRange(cards);
         discardPile.Clear();
     }
