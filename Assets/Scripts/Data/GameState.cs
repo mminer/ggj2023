@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,16 +18,13 @@ public class GameState : ScriptableObject
 
     // Players:
 
-    public Player? localPlayer { get; set; }
+    public Player localPlayer { get; set; }
+    public Player remotePlayer => localPlayer == Player.Player1 ? Player.Player2 : Player.Player1;
 
-    public Player? remotePlayer => localPlayer switch
-    {
-        Player.Player1 => Player.Player2,
-        Player.Player2 => Player.Player1,
-        _ => null,
-    };
+    // Game:
 
-    public Player? playerThatGoesFirst { get; set; }
+    public Phase phase { get; set; }
+    public Player playerWhoGoesFirst { get; set; }
 
     // Cards:
 
@@ -37,10 +33,5 @@ public class GameState : ScriptableObject
     public readonly List<Card> player1Hand = new();
     public readonly List<Card> player2Hand = new();
 
-    public IEnumerable<Card> localHand => localPlayer switch
-    {
-        Player.Player1 => player1Hand,
-        Player.Player2 => player2Hand,
-        _ => Array.Empty<Card>(),
-    };
+    public IEnumerable<Card> localHand => localPlayer == Player.Player1 ? player1Hand : player2Hand;
 }

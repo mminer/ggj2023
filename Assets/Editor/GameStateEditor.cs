@@ -9,29 +9,24 @@ public class GameStateEditor : Editor
     {
         DrawDefaultInspector();
         var gameState = (GameState)target;
+        var isPlaying = gameState.rng != null;
 
         CustomEditorUtility.Header("Random Number Generation");
-        EditorGUILayout.LabelField("Random Seed", gameState.rng != null ? gameState.randomSeed.ToString() : "Unassigned");
-        EditorGUILayout.LabelField("Game Code", gameState.rng != null ? GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed) : "Unassigned");
+        EditorGUILayout.LabelField("Random Seed", isPlaying ? gameState.randomSeed.ToString() : "");
+        EditorGUILayout.LabelField("Game Code", isPlaying ? GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed) : "");
 
         CustomEditorUtility.Header("Players");
-        EditorGUILayout.LabelField("Local Player", GetPlayerName(gameState.localPlayer));
-        EditorGUILayout.LabelField("Remote Player", GetPlayerName(gameState.remotePlayer));
+        EditorGUILayout.LabelField("Local Player", isPlaying ? ObjectNames.NicifyVariableName(gameState.localPlayer.ToString()) : "");
+        EditorGUILayout.LabelField("Remote Player", isPlaying ? ObjectNames.NicifyVariableName(gameState.remotePlayer.ToString()) : "");
+
+        CustomEditorUtility.Header("Game");
+        EditorGUILayout.LabelField("Phase", isPlaying ? gameState.phase.ToString() : "");
+        EditorGUILayout.LabelField("Player Who Goes First", isPlaying ? ObjectNames.NicifyVariableName(gameState.playerWhoGoesFirst.ToString()) : "");
 
         PrintCards("Deck", gameState.deck);
         PrintCards("Discard Pile", gameState.discardPile);
         PrintCards("Player 1 Hand", gameState.player1Hand);
         PrintCards("Player 2 Hand", gameState.player2Hand);
-    }
-
-    static string GetPlayerName(Player? player)
-    {
-        return player switch
-        {
-            Player.Player1 => "Player 1",
-            Player.Player2 => "Player 2",
-            _ => "Unassigned",
-        };
     }
 
     static void PrintCards(string headerText, IEnumerable<Card> cards)

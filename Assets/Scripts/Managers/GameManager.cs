@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
             gameState.player2Hand.Add(gameState.deck.Pop());
         }
 
-        gameState.playerThatGoesFirst = gameState.rng.NextBool() ? Player.Player1 : Player.Player2;
+        gameState.playerWhoGoesFirst = gameState.rng.NextBool() ? Player.Player1 : Player.Player2;
         cardsUpdatedEvent.Invoke();
     }
 
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void NextRound()
     {
-        gameState.playerThatGoesFirst = gameState.playerThatGoesFirst == Player.Player1
+        gameState.playerWhoGoesFirst = gameState.playerWhoGoesFirst == Player.Player1
             ? Player.Player2
             : Player.Player1;
     }
