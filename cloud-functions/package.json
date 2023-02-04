@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@google-cloud/pubsub": "^3.3.0",
+    "firebase-functions": "^4.2.1"
+  }
+}
