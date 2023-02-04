@@ -2,14 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu]
 public class GameState : ScriptableObject
 {
     [SerializeField] public Rules rules;
-    [SerializeField] public int randomSeed;
 
     [SerializeField] GameEvent cardsUpdatedEvent;
+
+    public int randomSeed
+    {
+        get => _randomSeed;
+        set {
+            _randomSeed = value;
+            Random.InitState(value);
+        }
+    }
+
+    int _randomSeed;
 
     // TODO: set depending on whether player created or joined game
     public Player? localPlayer { get; set; }= Player.Player1;
@@ -21,7 +32,7 @@ public class GameState : ScriptableObject
         _ => null,
     };
 
-    public IList<Card> localHand => localPlayer switch
+    public IEnumerable<Card> localHand => localPlayer switch
     {
         Player.Player1 => player1Hand,
         Player.Player2 => player2Hand,

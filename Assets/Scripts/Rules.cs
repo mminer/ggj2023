@@ -11,6 +11,8 @@ public class Rules : ScriptableObject
         public int count;
     }
 
+    public const int maxRandomSeed = 65_536; // 16^4 so that all seeds can be represented by 4 character hex string
+
     public int enemyCount = 4;
 
     [Header("Cards")]

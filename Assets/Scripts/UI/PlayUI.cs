@@ -5,26 +5,30 @@ public class PlayUI : MonoBehaviour
 {
     [SerializeField] GameState gameState;
 
-    VisualElement root;
+    Label gameCodeLabel;
+    VisualElement handWrapper;
 
     void Awake()
     {
-        root = GetComponent<UIDocument>().rootVisualElement;
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        gameCodeLabel = root.Q<Label>("game-code");
+        handWrapper = root.Q("hand-wrapper");
     }
 
-    void OnEnable()
+    public void RefreshCardUI()
     {
-        Refresh();
-    }
-
-    public void Refresh()
-    {
-        Debug.Log("Refreshing hand UI.");
-        root.Clear();
+        Debug.Log("Refreshing card UI.");
+        handWrapper.Clear();
 
         foreach (var card in gameState.localHand)
         {
-            root.Add(new Label(card.ToString()));
+            handWrapper.Add(new Label(card.ToString()));
         }
+    }
+
+    public void RefreshGameCodeUI()
+    {
+        Debug.Log($"Refreshing game code UI for random seed {gameState.randomSeed}.");
+        gameCodeLabel.text = GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed);
     }
 }

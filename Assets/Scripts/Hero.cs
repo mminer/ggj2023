@@ -32,7 +32,7 @@ public class Hero : MonoBehaviour
                 break;
 
             case Card.MoveRandom:
-                transform.position += Util.GetRandomDirection();
+                transform.position += MiscUtility.GetRandomDirection();
                 break;
 
             case Card.MoveSouth:

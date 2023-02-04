@@ -3,13 +3,26 @@ using UnityEngine.UIElements;
 
 public class StartUI : MonoBehaviour
 {
+    [SerializeField] GameState gameState;
     [SerializeField] GameEvent gameStartEvent;
 
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        var startGameButton = root.Q<Button>("start-game");
-        startGameButton.clicked += gameStartEvent.Invoke;
+        root.Q<Button>("start-game").clicked += () =>
+        {
+            gameState.randomSeed = Random.Range(0, Rules.maxRandomSeed);
+            gameState.localPlayer = Player.Player1;
+            gameStartEvent.Invoke();
+        };
+
+        root.Q<Button>("join-game").clicked += () =>
+        {
+            var gameCodeField = root.Q<TextField>("game-code");
+            gameState.randomSeed = GameCodeUtility.GameCodeToRandomSeed(gameCodeField.value);
+            gameState.localPlayer = Player.Player2;
+            gameStartEvent.Invoke();
+        };
     }
 }

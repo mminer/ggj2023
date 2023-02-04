@@ -14,10 +14,10 @@ public class UIService : Services.Service
     {
         foreach (var otherUI in uiDocuments)
         {
-            otherUI.gameObject.SetActive(false);
+            otherUI.enabled = false;
         }
 
         Debug.Log($"Showing UI: {ui.name}");
-        ui.gameObject.SetActive(true);
+        ui.enabled = true;
     }
 }

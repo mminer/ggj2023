@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public static class Util
+/// <summary>
+/// Functions that don't fit anywhere else.
+/// </summary>
+public static class MiscUtility
 {
     static readonly Vector3Int[] directions =
     {
@@ -14,5 +17,4 @@ public static class Util
     {
         return directions[Random.Range(0, 4)];
     }
-
 }
