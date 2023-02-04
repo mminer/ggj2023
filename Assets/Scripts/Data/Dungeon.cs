@@ -13,10 +13,8 @@ public class Dungeon
 
     public Cell this[Vector3Int position] => map[position];
 
-    public Dungeon(int randomSeed, Rules rules)
+    public Dungeon(RandomNumberGenerator rng, Rules rules)
     {
-        rng = new RandomNumberGenerator(randomSeed);
-
         var mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map<Cell>, Cell>(
             rules.mapWidth,
             rules.mapHeight,
@@ -25,7 +23,8 @@ public class Dungeon
             rules.roomMinSize,
             rng);
 
-        map = Map.Create(mapCreationStrategy);
+        this.map = Map.Create(mapCreationStrategy);
+        this.rng = rng;
     }
 
     public override string ToString()

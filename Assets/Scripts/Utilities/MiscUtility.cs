@@ -13,8 +13,8 @@ public static class MiscUtility
         Vector3Int.right,
     };
 
-    public static Vector3Int GetRandomDirection()
+    public static Vector3Int GetRandomDirection(RandomNumberGenerator rng)
     {
-        return directions[Random.Range(0, 4)];
+        return directions[rng.Next(0, 4)];
     }
 }

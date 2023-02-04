@@ -469,7 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   enemyPrefab: {fileID: 4847469896996707970, guid: 1817bd08da758437c8dd8afbdb01cbeb, type: 3}
-  heroPrefab: {fileID: 1448780956659128096, guid: 5f0b41bc63fff4cae98134148d57ff12, type: 3}
+  heroPrefab: {fileID: 1315352431, guid: 5f0b41bc63fff4cae98134148d57ff12, type: 3}
   groundPrefab: {fileID: 7106692325434393316, guid: 1c0fb87a3533d4590af6662528e9a17f, type: 3}
   wallPrefab: {fileID: 3265183543092376448, guid: 449c324aa3c3448e7a7b2352a3d7b13d, type: 3}
 --- !u!114 &1793267159

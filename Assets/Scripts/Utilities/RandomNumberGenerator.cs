@@ -6,43 +6,45 @@ using UnityEngine;
 /// </summary>
 public class RandomNumberGenerator : IRandom
 {
-    int seed;
-    long timesUsed;
+    public int randomSeed { get; private set; }
 
-    public RandomNumberGenerator(int seed)
-    {
-        this.seed = seed;
-        Random.InitState(seed);
-    }
+    long numberGenerated;
 
-    public int Next(int maxValue)
+    public RandomNumberGenerator(int randomSeed)
     {
-        return Random.Range(0, maxValue);
+        this.randomSeed = randomSeed;
+        Random.InitState(randomSeed);
     }
 
     public int Next(int minValue, int maxValue)
     {
+        numberGenerated++;
         return Random.Range(minValue, maxValue);
+    }
+
+    public int Next(int maxValue)
+    {
+        return Next(0, maxValue);
     }
 
     public bool NextBool()
     {
-        return Random.Range(0, 2) == 1;
+        return Next(0, 2) == 1;
     }
 
     public void Restore(RandomState state)
     {
-        seed = state.Seed[0];
-        timesUsed = state.NumberGenerated;
-        Random.InitState(seed);
+        numberGenerated = state.NumberGenerated;
+        randomSeed = state.Seed[0];
+        Random.InitState(randomSeed);
     }
 
     public RandomState Save()
     {
         return new RandomState
         {
-            NumberGenerated = timesUsed,
-            Seed = new[] { seed },
+            NumberGenerated = numberGenerated,
+            Seed = new[] { randomSeed },
         };
     }
 }
