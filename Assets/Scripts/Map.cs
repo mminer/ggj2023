@@ -9,6 +9,8 @@ using UnityEngine;
 /// </summary>
 public class Map<TCell> : RogueSharp.Map<TCell> where TCell : ICell
 {
+    public IEnumerable<TCell> walkableCells => GetAllCells().Where(cell => cell.IsWalkable);
+
     public TCell this[Vector3Int position] => this[position.x, position.z];
 
     public override string ToString()

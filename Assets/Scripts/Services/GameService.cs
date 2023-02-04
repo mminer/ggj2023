@@ -1,8 +1,12 @@
+using UnityEngine;
+
 public class GameService : Services.Service
 {
-    void Start()
+    [Header("Events")]
+    [SerializeField] GameEvent gameOverEvent;
+
+    public void EndGame()
     {
-        var dungeonService = Services.Get<DungeonService>();
-        dungeonService.GenerateDungeon();
+        gameOverEvent.Invoke();
     }
 }

@@ -1,5 +1,6 @@
 using RogueSharp;
 using RogueSharp.MapCreation;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -7,27 +8,34 @@ using UnityEngine;
 /// </summary>
 public class Dungeon
 {
-    public class Cell : RogueSharp.Cell
-    {
-        public Vector3Int Position => new(X, 0, Y);
-    }
-
     readonly Map<Cell> map;
     readonly RandomNumberGenerator rng;
 
-    public Dungeon(int seed, int width, int height, int maxRooms, int roomMaxSize, int roomMinSize)
+    public Cell this[Vector3Int position] => map[position];
+
+    public Dungeon(int randomSeed, Rules rules)
     {
-        rng = new RandomNumberGenerator(seed);
+        rng = new RandomNumberGenerator(randomSeed);
 
         var mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map<Cell>, Cell>(
-            width,
-            height,
-            maxRooms,
-            roomMaxSize,
-            roomMinSize,
+            rules.mapWidth,
+            rules.mapHeight,
+            rules.maxRooms,
+            rules.roomMaxSize,
+            rules.roomMinSize,
             rng);
 
         map = Map.Create(mapCreationStrategy);
-        Debug.Log("Dungeon map:\n" + map);
+    }
+
+    public override string ToString()
+    {
+        return map.ToString();
+    }
+
+    public Cell GetRandomWalkableCell()
+    {
+        var walkableCells = map.walkableCells.ToArray();
+        return walkableCells[rng.Next(walkableCells.Length)];
     }
 }
