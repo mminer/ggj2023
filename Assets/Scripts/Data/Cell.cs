@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Represents a tile on the map.
+/// </summary>
 public class Cell : RogueSharp.Cell
 {
     public Item item;

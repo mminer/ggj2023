@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonService : Services.Service
+public class DungeonManager : MonoBehaviour
 {
     [SerializeField] GameState gameState;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UIService : Services.Service
+public class UIManager : MonoBehaviour
 {
     UIDocument[] uiDocuments;
 
