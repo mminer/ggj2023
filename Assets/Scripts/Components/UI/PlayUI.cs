@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class PlayUI : MonoBehaviour
 {
     [SerializeField] GameState gameState;
+    [SerializeField] GameEvent roundActionSubmittedEvent;
 
     Button discardButton;
     VisualElement discardChoicesContainer;
@@ -35,6 +36,7 @@ public class PlayUI : MonoBehaviour
 
             var roundAction = new RoundAction_Discard(gameState.localPlayerIndex, cards);
             gameState.SetRoundAction(roundAction);
+            roundActionSubmittedEvent.Invoke();
         };
 
         discardChoicesContainer = root.Q("discard-choices-container");
@@ -60,6 +62,7 @@ public class PlayUI : MonoBehaviour
 
             var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, cards);
             gameState.SetRoundAction(roundAction);
+            roundActionSubmittedEvent.Invoke();
         };
     }
 
