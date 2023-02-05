@@ -18,8 +18,9 @@ public class GameState : ScriptableObject
 
     // Players:
 
-    public Player localPlayer { get; set; }
-    public Player remotePlayer => localPlayer == Player.Player1 ? Player.Player2 : Player.Player1;
+    public readonly Player[] players = { new(0), new(1) };
+    public int localPlayerIndex { get; set; }
+    public Player localPlayer => players[localPlayerIndex];
 
     // Game:
 
@@ -27,14 +28,21 @@ public class GameState : ScriptableObject
     public readonly List<Transform> enemies = new();
     public Hero hero { get; set; }
     public Phase phase { get; set; }
-    public Player playerWhoGoesFirst { get; set; }
+    public int startingPlayerIndex;
+
+    public IEnumerable<int> playerOrder
+    {
+        get
+        {
+            for (var i = 0; i < players.Length; i++)
+            {
+                yield return (i + startingPlayerIndex) % players.Length;
+            }
+        }
+    }
 
     // Cards:
 
     public readonly Stack<Card> deck = new();
     public readonly Stack<Card> discardPile = new();
-    public readonly List<Card> player1Hand = new();
-    public readonly List<Card> player2Hand = new();
-
-    public IEnumerable<Card> localHand => localPlayer == Player.Player1 ? player1Hand : player2Hand;
 }

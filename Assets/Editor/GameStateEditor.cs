@@ -22,8 +22,7 @@ public class GameStateEditor : Editor
         EditorGUILayout.LabelField("Game Code", isGameActive ? GameCodeUtility.RandomSeedToGameCode(gameState.randomSeed) : "");
 
         CustomEditorUtility.Header("Players");
-        EditorGUILayout.LabelField("Local Player", isGameActive ? ObjectNames.NicifyVariableName(gameState.localPlayer.ToString()) : "");
-        EditorGUILayout.LabelField("Remote Player", isGameActive ? ObjectNames.NicifyVariableName(gameState.remotePlayer.ToString()) : "");
+        EditorGUILayout.LabelField("Local Player", isGameActive ? gameState.localPlayerIndex.ToString() : "");
 
         CustomEditorUtility.Header("Game");
         EditorGUILayout.ObjectField("Hero", gameState.hero, gameState.hero != null ? gameState.hero.GetType() : null, false);
@@ -34,12 +33,15 @@ public class GameStateEditor : Editor
         }
 
         EditorGUILayout.LabelField("Phase", isGameActive ? gameState.phase.ToString() : "");
-        EditorGUILayout.LabelField("Player Who Goes First", isGameActive ? ObjectNames.NicifyVariableName(gameState.playerWhoGoesFirst.ToString()) : "");
+        EditorGUILayout.LabelField("Player Order", isGameActive ? string.Join(", ", gameState.playerOrder) : "");
 
         PrintCards("Deck", gameState.deck);
         PrintCards("Discard Pile", gameState.discardPile);
-        PrintCards("Player 1 Hand", gameState.player1Hand);
-        PrintCards("Player 2 Hand", gameState.player2Hand);
+
+        foreach (var player in gameState.players)
+        {
+            PrintCards($"Player {player.id} Hand", player.hand);
+        }
     }
 
     static void PrintCards(string headerText, IEnumerable<Card> cards)

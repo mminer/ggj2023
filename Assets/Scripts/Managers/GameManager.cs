@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,33 +8,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameState gameState;
     [SerializeField] GameEvent cardsUpdatedEvent;
 
-    public void ShuffleDeckAndDealHands()
+    Dealer dealer;
+
+    void Awake()
     {
-        // Reset card state. In normal play it won't be necessary to do this, but if invoke the game start event
-        // manually (e.g. through the inspector) we need to clear the previous game's data.
-        gameState.deck.Clear();
-        gameState.discardPile.Clear();
-        gameState.player1Hand.Clear();
-        gameState.player2Hand.Clear();
+        dealer = new Dealer(gameState);
+    }
 
-        // Generate deck from rules:
-
-        var cards = gameState.rules.deckConfig
-            .SelectMany(cardConfig => Enumerable.Repeat(cardConfig.card, cardConfig.count))
-            .Shuffle(gameState.rng);
-
-        gameState.deck.AddRange(cards);
-
-        // Deal player hands:
-
-        for (var i = 0; i < gameState.rules.handSize; i++)
-        {
-            gameState.player1Hand.Add(gameState.deck.Pop());
-            gameState.player2Hand.Add(gameState.deck.Pop());
-        }
-
-        gameState.playerWhoGoesFirst = gameState.rng.NextBool() ? Player.Player1 : Player.Player2;
+    public void StartGame()
+    {
+        dealer.GenerateDeckAndDealHands();
         cardsUpdatedEvent.Invoke();
+        gameState.startingPlayerIndex = gameState.rng.Next(gameState.players.Length);
+        StartCoroutine(GameLoop());
     }
 
     public void Discard(List<Card> hand, List<Card> cards)
@@ -64,11 +51,34 @@ public class GameManager : MonoBehaviour
         cardsUpdatedEvent.Invoke();
     }
 
-    public void NextRound()
+    IEnumerator GameLoop()
     {
-        gameState.playerWhoGoesFirst = gameState.playerWhoGoesFirst == Player.Player1
-            ? Player.Player2
-            : Player.Player1;
+        // TODO: break when player reaches exit
+        while (true)
+        {
+            // TODO: handle pickup / discard phase
+
+            Debug.Log("Game loop: waiting for players to submit card queues.");
+            yield return new WaitUntil(() => gameState.players.All(player => player.queue.Count > 0));
+
+            Debug.Log("Game loop: applying cards.");
+
+            var interleavedQueue = dealer.GetInterleavedQueue();
+
+            foreach (var card in interleavedQueue)
+            {
+                yield return new WaitForSeconds(1);
+                gameState.hero.ApplyCard(card);
+            }
+
+            dealer.ClearQueues();
+            NextStartingPlayer();
+        }
+    }
+
+    void NextStartingPlayer()
+    {
+        gameState.startingPlayerIndex = (gameState.startingPlayerIndex + 1) % gameState.players.Length;
     }
 
     void ShuffleDiscardPile()

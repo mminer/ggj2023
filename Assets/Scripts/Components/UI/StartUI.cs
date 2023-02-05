@@ -14,7 +14,7 @@ public class StartUI : MonoBehaviour
         {
             // This is the only time outside RandomNumberGenerator we should use UnityEngine.Random directly.
             gameState.randomSeed = Random.Range(0, Rules.maxRandomSeed);
-            gameState.localPlayer = Player.Player1;
+            gameState.localPlayerIndex = 0;
             gameStartEvent.Invoke();
         };
 
@@ -22,7 +22,7 @@ public class StartUI : MonoBehaviour
         {
             var gameCodeField = root.Q<TextField>("game-code");
             gameState.randomSeed = GameCodeUtility.GameCodeToRandomSeed(gameCodeField.value);
-            gameState.localPlayer = Player.Player2;
+            gameState.localPlayerIndex = 1;
             gameStartEvent.Invoke();
         };
     }

@@ -9,15 +9,15 @@ public class HeroEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+        var hero = (Hero)target;
 
         using (new EditorGUILayout.HorizontalScope())
         {
             card = (Card)EditorGUILayout.EnumPopup(card);
 
-            if (GUILayout.Button("Play Card"))
+            if (GUILayout.Button("Apply Card"))
             {
-                var hero = target as Hero;
-                hero.PlayCard(card);
+                hero.ApplyCard(card);
             }
         }
     }

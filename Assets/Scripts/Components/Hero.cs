@@ -1,20 +1,11 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
     public GameState gameState { private get; set; }
 
-    public void PlayCards(IEnumerable<Card> cards)
-    {
-        foreach (var card in cards)
-        {
-            PlayCard(card);
-        }
-    }
-
-    public void PlayCard(Card card)
+    public void ApplyCard(Card card)
     {
         Debug.Log($"Playing card: {card}");
 

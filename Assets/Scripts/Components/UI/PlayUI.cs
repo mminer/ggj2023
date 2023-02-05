@@ -39,7 +39,7 @@ public class PlayUI : MonoBehaviour
         Debug.Log("Refreshing card UI.");
         handContainer.Clear();
 
-        foreach (var card in gameState.localHand)
+        foreach (var card in gameState.localPlayer.hand)
         {
             var cardButton = new Button
             {
