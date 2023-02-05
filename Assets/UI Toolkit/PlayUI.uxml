@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label tabindex="-1" text="ABCD" display-tooltip-when-elided="true" name="game-code" />
-    <ui:Label tabindex="-1" text="Hand:" display-tooltip-when-elided="true" />
+    <ui:Template name="PhaseUI_Discard" src="project://database/Assets/UI%20Toolkit/PhaseUI_Discard.uxml?fileID=9197481963319205126&amp;guid=9429fd810990846b4974e94099b0ec75&amp;type=3#PhaseUI_Discard" />
+    <ui:Template name="PhaseUI_CreateQueue" src="project://database/Assets/UI%20Toolkit/PhaseUI_Queue.uxml?fileID=9197481963319205126&amp;guid=61613ba04b9e84c16a3875ee60834ae8&amp;type=3#PhaseUI_Queue" />
+    <ui:Label tabindex="-1" text="ABCD" display-tooltip-when-elided="true" name="game-code-label" style="color: rgb(255, 255, 255);" />
+    <ui:Label tabindex="-1" text="Phase:" display-tooltip-when-elided="true" name="phase-label" style="color: rgb(255, 255, 255);" />
+    <ui:Label tabindex="-1" text="Hand:" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
     <ui:VisualElement name="hand-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;" />
-    <ui:Label tabindex="-1" text="Queue:" display-tooltip-when-elided="true" />
-    <ui:VisualElement name="queue-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;" />
-    <ui:Button text="Submit Queue" display-tooltip-when-elided="true" name="submit" />
+    <ui:Instance template="PhaseUI_Discard" name="discard-phase-container" />
+    <ui:Instance template="PhaseUI_CreateQueue" name="queue-phase-container" />
 </ui:UXML>

@@ -40,7 +40,7 @@ public class RemotePlayerSimulatorWindow : EditorWindow
                     }
                 }
 
-                using (new EditorGUI.DisabledScope(gameState.phase != Phase.CreateQueue))
+                using (new EditorGUI.DisabledScope(gameState.phase != Phase.Queue))
                 {
                     if (GUILayout.Button("Add to Queue"))
                     {
@@ -50,7 +50,7 @@ public class RemotePlayerSimulatorWindow : EditorWindow
             }
         }
 
-        using (new EditorGUI.DisabledScope(gameState.phase != Phase.CreateQueue))
+        using (new EditorGUI.DisabledScope(gameState.phase != Phase.Queue))
         {
             EditorGUILayout.Space();
             GUILayout.Label("Queue:", EditorStyles.boldLabel);

@@ -33,13 +33,12 @@ public class DungeonManager : MonoBehaviour
                 var position = new Vector3Int(x, 0, z);
                 var cell = gameState.dungeon[position];
 
-                var prefab = cell switch
+                if (!cell.IsWalkable)
                 {
-                    { IsWalkable: true } => groundPrefab,
-                    _ => wallPrefab,
-                };
+                    Instantiate(wallPrefab, position, Quaternion.identity, transform);
+                }
 
-                Instantiate(prefab, position, Quaternion.identity, transform);
+                Instantiate(groundPrefab, position, Quaternion.identity, transform);
             }
         }
 

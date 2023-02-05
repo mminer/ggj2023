@@ -39,12 +39,12 @@ public class GameManager : MonoBehaviour
 
             // Create queue:
 
-            SetPhase(Phase.CreateQueue);
+            SetPhase(Phase.Queue);
             yield return WaitToReceiveAllRoundActions();
 
             // Interleave card queues and apply to hero:
 
-            SetPhase(Phase.ApplyCards);
+            SetPhase(Phase.Apply);
 
             for (var queueIndex = 0; queueIndex < gameState.rules.queueSize; queueIndex++)
             {

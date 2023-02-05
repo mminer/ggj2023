@@ -1,9 +1,9 @@
 /// <summary>
-/// Game stage.
+/// Round stage.
 /// </summary>
 public enum Phase
 {
     Discard,
-    CreateQueue,
-    ApplyCards,
+    Queue,
+    Apply,
 }

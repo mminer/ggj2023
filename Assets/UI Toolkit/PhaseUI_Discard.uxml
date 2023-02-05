@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="Discard choices:" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+    <ui:VisualElement name="discard-choices-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+    <ui:Button text="Discard" display-tooltip-when-elided="true" name="discard-button" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+</ui:UXML>
