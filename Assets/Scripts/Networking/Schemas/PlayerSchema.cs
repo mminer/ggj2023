@@ -5,17 +5,19 @@ public class PlayerSchema: BaseSchema
 {
     public const string pathKey = "players";
     
-    private string created;
+    private readonly string created;
     private readonly string name;
     private readonly int icon;
     private readonly int index;
 
-    public PlayerSchema(int index, string name, int icon)
+    public PlayerSchema(int index, string name, int icon) : this(index, name, icon, GetCurrentTimestamp()) {}
+    
+    public PlayerSchema(int index, string name, int icon, string created)
     {
         this.index = index;
         this.name = name;
         this.icon = icon;
-        created = GetCurrentTimestamp();
+        this.created = created;
     }
 
     public override Dictionary<string, object> ToDict()

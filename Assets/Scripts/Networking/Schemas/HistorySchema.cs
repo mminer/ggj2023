@@ -4,17 +4,19 @@ public class HistorySchema: BaseSchema
 {
     public const string pathKey = "history";
     
-    private string created;
+    private readonly string created;
     private readonly int playerId;
     private readonly int actionId;
-    private List<int> data;
+    private readonly List<int> data;
 
-    public HistorySchema(int playerId, int actionId, List<int> data)
+    public HistorySchema(int playerId, int actionId, List<int> data) : this(playerId, actionId, data, GetCurrentTimestamp()) {}
+
+    public HistorySchema(int playerId, int actionId, List<int> data, string created)
     {
         this.playerId = playerId;
         this.actionId = actionId;
         this.data = data;
-        created = GetCurrentTimestamp();
+        this.created = created;
     }
 
     public override Dictionary<string, object> ToDict()
@@ -23,7 +25,7 @@ public class HistorySchema: BaseSchema
         {
             ["created"] = created,
             ["player_id"] = playerId,
-            ["actionId"] = actionId,
+            ["action_id"] = actionId,
             ["data"] = data,
         };
     }
