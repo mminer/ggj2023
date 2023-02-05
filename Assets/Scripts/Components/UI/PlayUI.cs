@@ -28,7 +28,7 @@ public class PlayUI : MonoBehaviour
                 .Select(child => (Card)child.userData)
                 .ToArray();
 
-            var roundAction = new IRoundAction.SubmitQueue(gameState.localPlayerIndex, queue);
+            var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, queue);
             gameState.SetRoundActionForLocalPlayer(roundAction);
         };
 

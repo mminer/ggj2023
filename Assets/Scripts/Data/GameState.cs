@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Android;
 
 [CreateAssetMenu]
 public partial class GameState : ScriptableObject
@@ -20,16 +19,9 @@ public partial class GameState : ScriptableObject
     // Players:
 
     public readonly Player[] players = { new(0), new(1) };
+
     public int localPlayerIndex { get; set; }
     public Player localPlayer => players[localPlayerIndex];
-
-    // Game:
-
-    public Dungeon dungeon { get; set; }
-    public readonly List<Transform> enemies = new();
-    public Hero hero { get; set; }
-    public Phase phase { get; set; }
-    public int startingPlayerIndex { get; set; }
 
     public IEnumerable<int> playerOrder
     {
@@ -42,7 +34,17 @@ public partial class GameState : ScriptableObject
         }
     }
 
+    int startingPlayerIndex { get; set; }
+
+    // Game:
+
+    public Dungeon dungeon { get; set; }
+    public readonly List<Transform> enemies = new();
+    public Hero hero { get; set; }
+    public Phase phase { get; set; }
+
     public readonly List<IRoundAction[]> roundActions = new();
+    public IRoundAction[] latestRoundActionGroup => roundActions[^1];
 
     // Cards:
 

@@ -9,18 +9,16 @@ public partial class GameState
         roundActions.Add(group);
     }
 
-    /*
-    public void Discard(List<Card> hand, List<Card> cards)
+    public void Discard(int playerIndex, IEnumerable<Card> cards)
     {
-        Debug.Assert(cards.Count == rules.drawCount, "Must discard same number of cards drawn.");
+        var player = players[playerIndex];
 
         foreach (var card in cards)
         {
-            hand.Remove(card);
+            player.hand.Remove(card);
             discardPile.Push(card);
         }
     }
-    */
 
     public void DrawCardsFromDeck()
     {
@@ -47,19 +45,6 @@ public partial class GameState
         DealHands();
     }
 
-    public IEnumerable<Card> InterleaveCardQueue()
-    {
-        for (var queueIndex = 0; queueIndex < rules.queueSize; queueIndex++)
-        {
-            foreach (var playerIndex in playerOrder)
-            {
-                yield return players[playerIndex].queue[queueIndex];
-            }
-        }
-
-        ClearCardQueues();
-    }
-
     public void IncrementStartingPlayerIndex()
     {
         startingPlayerIndex = (startingPlayerIndex + 1) % players.Length;
@@ -72,8 +57,7 @@ public partial class GameState
 
     public void SetRoundAction(IRoundAction roundAction, int playerIndex)
     {
-        var group = roundActions[^1];
-        group[playerIndex] = roundAction;
+        latestRoundActionGroup[playerIndex] = roundAction;
     }
 
     public void SetRoundActionForLocalPlayer(IRoundAction roundAction)
@@ -81,20 +65,11 @@ public partial class GameState
         SetRoundAction(roundAction, localPlayerIndex);
     }
 
-    void ClearCardQueues()
-    {
-        foreach (var player in players)
-        {
-            player.queue.Clear();
-        }
-    }
-
     void DealHands()
     {
         foreach (var player in players)
         {
             player.hand.Clear();
-            player.queue.Clear();
         }
 
         for (var i = 0; i < rules.handSize; i++)

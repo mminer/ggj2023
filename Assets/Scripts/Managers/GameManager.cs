@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -24,35 +23,57 @@ public class GameManager : MonoBehaviour
         // TODO: break when player reaches exit
         while (true)
         {
-            // Discard:
+            // Draw and discard:
 
-            SetPhase(Phase.Discard);
             gameState.DrawCardsFromDeck();
+            SetPhase(Phase.Discard);
             yield return WaitToReceiveAllRoundActions();
 
-            // Create Queue:
+            // Resolve discards:
+
+            foreach (var playerIndex in gameState.playerOrder)
+            {
+                var roundAction = (RoundAction_Discard)gameState.latestRoundActionGroup[playerIndex];
+                gameState.Discard(playerIndex, roundAction.cards);
+            }
+
+            // Create queue:
 
             SetPhase(Phase.CreateQueue);
             yield return WaitToReceiveAllRoundActions();
 
-            // Apply Cards:
+            // Interleave card queues and apply to hero:
 
             SetPhase(Phase.ApplyCards);
 
-            foreach (var card in gameState.InterleaveCardQueue())
+            for (var queueIndex = 0; queueIndex < gameState.rules.queueSize; queueIndex++)
             {
-                yield return new WaitForSeconds(cardApplyDelaySeconds);
-                gameState.hero.ApplyCard(card);
+                foreach (var playerIndex in gameState.playerOrder)
+                {
+                    yield return new WaitForSeconds(cardApplyDelaySeconds);
+                    var submitQueueAction = (RoundAction_SubmitQueue)gameState.latestRoundActionGroup[playerIndex];
+                    var card = submitQueueAction.cards[queueIndex];
+                    gameState.hero.ApplyCard(card);
+                }
             }
+
+            // Prepare for next round:
 
             gameState.IncrementStartingPlayerIndex();
         }
     }
 
-    bool HaveReceivedAllRoundActions()
+    bool IsLatestRoundActionGroupComplete()
     {
-        var group = gameState.roundActions[^1];
-        return group.All(networkAction => networkAction != null);
+        foreach (var roundAction in gameState.latestRoundActionGroup)
+        {
+            if (roundAction == null)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     void SetPhase(Phase phase)
@@ -65,7 +86,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitToReceiveAllRoundActions()
     {
         gameState.AddRoundActionGroup();
-        Debug.Log($"Waiting to receive all round actions; index: {gameState.roundActions.Count - 1}");
-        yield return new WaitUntil(HaveReceivedAllRoundActions);
+        Debug.Log($"Waiting to receive all round actions for group: {gameState.roundActions.Count - 1}");
+        yield return new WaitUntil(IsLatestRoundActionGroupComplete);
     }
 }

@@ -1,28 +1,28 @@
 public interface IRoundAction
 {
     public int playerIndex { get; }
+}
 
-    public readonly struct Discard : IRoundAction
+public readonly struct RoundAction_Discard : IRoundAction
+{
+    public int playerIndex { get; }
+    public readonly Card[] cards;
+
+    public RoundAction_Discard(int playerIndex, Card[] cards)
     {
-        public int playerIndex { get; }
-        public readonly Card card;
-
-        public Discard(int playerIndex, Card card)
-        {
-            this.playerIndex = playerIndex;
-            this.card = card;
-        }
+        this.playerIndex = playerIndex;
+        this.cards = cards;
     }
+}
 
-    public readonly struct SubmitQueue : IRoundAction
+public readonly struct RoundAction_SubmitQueue : IRoundAction
+{
+    public int playerIndex { get; }
+    public readonly Card[] cards;
+
+    public RoundAction_SubmitQueue(int playerIndex, Card[] cards)
     {
-        public int playerIndex { get; }
-        public readonly Card[] queue;
-
-        public SubmitQueue(int playerIndex, Card[] queue)
-        {
-            this.playerIndex = playerIndex;
-            this.queue = queue;
-        }
+        this.playerIndex = playerIndex;
+        this.cards = cards;
     }
 }
