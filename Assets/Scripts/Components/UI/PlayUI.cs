@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -103,6 +104,7 @@ public class PlayUI : MonoBehaviour
             {
                 Phase.Discard => discardChoicesContainer,
                 Phase.Queue => queueChoicesContainer,
+                _ => throw new ArgumentOutOfRangeException(),
             };
         }
         else

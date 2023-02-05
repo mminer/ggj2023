@@ -4,11 +4,11 @@ public class HistorySchema: BaseSchema
 {
     public const string pathKey = "history";
     
-    private readonly string created;
-    private readonly int playerId;
-    private readonly int actionId;
-    private readonly string phase;
-    private readonly List<int> data;
+    public readonly string created;
+    public readonly int playerId;
+    public readonly int actionId;
+    public readonly string phase;
+    public readonly List<int> data;
 
     public HistorySchema(int playerId, int actionId, string phase, List<int> data) : this(playerId, actionId, phase, data, GetCurrentTimestamp()) {}
 
