@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
@@ -34,6 +35,7 @@ public class DatabaseManager : MonoBehaviour {
     FirebaseDatabase.DefaultInstance.GoOnline();
     // StartListener();
     isFirebaseInitialized = true;
+    Database.Init();
     Debug.Log("Firebase initialized");
   }
 

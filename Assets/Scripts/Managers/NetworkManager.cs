@@ -11,14 +11,14 @@ public class NetworkManager : MonoBehaviour
       var playerSchema = new PlayerSchema(gameState.localPlayerIndex, "Player1", 0);
       var gameCode = GetGameCode();
       var gameSchema = new GameSchema(gameCode);
-      GameTransaction.CreateGame(gameSchema, playerSchema);
+      Database.CreateGame(gameSchema, playerSchema);
     }
 
     public void JoinGame()
     {
       var playerSchema = new PlayerSchema(1, "Player2", 0);
       var gameCode = GetGameCode();
-      PlayerTransaction.JoinGame(gameCode, playerSchema);
+      Database.JoinGame(gameCode, playerSchema);
     }
     
     public void EndGame()
@@ -26,7 +26,7 @@ public class NetworkManager : MonoBehaviour
       var gameCode = GetGameCode();
       var gameSchema = new GameSchema(gameCode);
       gameSchema.EndGame();
-      GameTransaction.EndGame(gameSchema);
+      Database.EndGame(gameSchema);
     }
     
     public void RecordAction()
@@ -37,7 +37,7 @@ public class NetworkManager : MonoBehaviour
       // var action = gameState.latestRoundActionGroup[playerId];
       var data = new List<int>(); // TODO: populate data
       var historySchema = new HistorySchema(playerId, actionId, data);
-      HistoryTransaction.AddHistory(gameCode, historySchema);
+      Database.AddHistory(gameCode, historySchema);
     }
 
     private string GetGameCode()
