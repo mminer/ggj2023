@@ -21,6 +21,38 @@ public class Dealer
         }
     }
 
+    /*
+    public void Discard(List<Card> hand, List<Card> cards)
+    {
+        Debug.Assert(cards.Count == gameState.rules.drawCount, "Must discard same number of cards drawn.");
+
+        foreach (var card in cards)
+        {
+            hand.Remove(card);
+            gameState.discardPile.Push(card);
+        }
+
+        cardsUpdatedEvent.Invoke();
+    }
+    */
+
+    public void Draw()
+    {
+        for (var i = 0; i < gameState.rules.drawCount; i++)
+        {
+            foreach (var playerIndex in gameState.playerOrder)
+            {
+                if (gameState.deck.Count == 0)
+                {
+                    ShuffleDiscardPile();
+                }
+
+                var card = gameState.deck.Pop();
+                gameState.players[playerIndex].hand.Add(card);
+            }
+        }
+    }
+
     public void GenerateDeckAndDealHands()
     {
         GenerateDeck();
@@ -66,5 +98,12 @@ public class Dealer
             .Shuffle(gameState.rng);
 
         gameState.deck.AddRange(cards);
+    }
+
+    void ShuffleDiscardPile()
+    {
+        var cards = gameState.discardPile.Shuffle(gameState.rng);
+        gameState.deck.AddRange(cards);
+        gameState.discardPile.Clear();
     }
 }

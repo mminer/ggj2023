@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 [CreateAssetMenu]
 public class GameState : ScriptableObject
@@ -28,7 +29,7 @@ public class GameState : ScriptableObject
     public readonly List<Transform> enemies = new();
     public Hero hero { get; set; }
     public Phase phase { get; set; }
-    public int startingPlayerIndex;
+    public int startingPlayerIndex { get; set; }
 
     public IEnumerable<int> playerOrder
     {
@@ -40,6 +41,11 @@ public class GameState : ScriptableObject
             }
         }
     }
+
+    // To append a round action:
+    //
+    //     roundActions[^1][localPlayerIndex] = roundAction;
+    public readonly List<IRoundAction[]> roundActions = new();
 
     // Cards:
 

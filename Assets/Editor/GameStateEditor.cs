@@ -33,7 +33,7 @@ public class GameStateEditor : Editor
         }
 
         EditorGUILayout.LabelField("Phase", isGameActive ? gameState.phase.ToString() : "");
-        EditorGUILayout.LabelField("Player Order", isGameActive ? string.Join(", ", gameState.playerOrder) : "");
+        EditorGUILayout.LabelField("Starting Player", isGameActive ? string.Join(", ", gameState.playerOrder) : "");
 
         PrintCards("Deck", gameState.deck);
         PrintCards("Discard Pile", gameState.discardPile);

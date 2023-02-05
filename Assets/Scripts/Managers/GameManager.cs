@@ -1,12 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameState gameState;
+    [SerializeField] float cardApplyDelaySeconds = 1;
+
+    [Header("Events")]
     [SerializeField] GameEvent cardsUpdatedEvent;
+    [SerializeField] GameEvent phaseChangedEvent;
 
     Dealer dealer;
 
@@ -23,68 +26,62 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameLoop());
     }
 
-    public void Discard(List<Card> hand, List<Card> cards)
-    {
-        Debug.Assert(cards.Count == gameState.rules.drawCount, "Must discard same number of cards drawn.");
-
-        foreach (var card in cards)
-        {
-            hand.Remove(card);
-            gameState.discardPile.Push(card);
-        }
-
-        cardsUpdatedEvent.Invoke();
-    }
-
-    public void Draw(List<Card> hand)
-    {
-        for (var i = 0; i < gameState.rules.drawCount; i++)
-        {
-            if (gameState.deck.Count == 0)
-            {
-                ShuffleDiscardPile();
-            }
-
-            hand.Add(gameState.deck.Pop());
-        }
-
-        cardsUpdatedEvent.Invoke();
-    }
-
     IEnumerator GameLoop()
     {
         // TODO: break when player reaches exit
         while (true)
         {
-            // TODO: handle pickup / discard phase
+            // Discard:
 
-            Debug.Log("Game loop: waiting for players to submit card queues.");
-            yield return new WaitUntil(() => gameState.players.All(player => player.queue.Count > 0));
+            SetPhase(Phase.Discard);
+            dealer.Draw();
+            AddRoundActionGroup();
+            yield return new WaitUntil(HaveReceivedAllRoundActions);
 
-            Debug.Log("Game loop: applying cards.");
+            // Create Queue:
 
-            var interleavedQueue = dealer.GetInterleavedQueue();
+            SetPhase(Phase.CreateQueue);
+            AddRoundActionGroup();
+            yield return new WaitUntil(HaveReceivedAllRoundActions);
 
-            foreach (var card in interleavedQueue)
+            // Apply Cards:
+
+            SetPhase(Phase.ApplyCards);
+
+            foreach (var card in dealer.GetInterleavedQueue())
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(cardApplyDelaySeconds);
                 gameState.hero.ApplyCard(card);
             }
 
             dealer.ClearQueues();
-            NextStartingPlayer();
+            IncrementStartingPlayerIndex();
         }
     }
 
-    void NextStartingPlayer()
+    void AddRoundActionGroup()
     {
-        gameState.startingPlayerIndex = (gameState.startingPlayerIndex + 1) % gameState.players.Length;
+        var group = new IRoundAction[gameState.players.Length];
+        gameState.roundActions.Add(group);
+        Debug.Log($"Round action index: {gameState.roundActions.Count - 1}");
     }
 
-    void ShuffleDiscardPile()
+    bool HaveReceivedAllRoundActions()
     {
-        var cards = gameState.discardPile.Shuffle(gameState.rng);
-        gameState.deck.AddRange(cards);
-        gameState.discardPile.Clear();
+        var group = gameState.roundActions[^1];
+        return group.All(networkAction => networkAction != null);
+    }
+
+    void IncrementStartingPlayerIndex()
+    {
+        gameState.startingPlayerIndex++;
+        gameState.startingPlayerIndex %= gameState.players.Length;
+    }
+
+    void SetPhase(Phase phase)
+    {
+        Debug.Log($"Phase: {phase}");
+        gameState.phase = phase;
+        phaseChangedEvent.Invoke();
     }
 }

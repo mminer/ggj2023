@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+  roundActionSubmittedEvent: {fileID: 11400000, guid: 21b8c992bb75346a5bb9ff8d5ca28ef3, type: 2}
 --- !u!114 &2099998851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +396,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+  cardApplyDelaySeconds: 1
   cardsUpdatedEvent: {fileID: 11400000, guid: f8d417f3123d24ac392117bdf9f97c2a, type: 2}
+  phaseChangedEvent: {fileID: 11400000, guid: aadbada018c334f8cba49fc7806b8599, type: 2}
 --- !u!114 &244738455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +417,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4726112982377704188}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ShuffleDeckAndDealHands
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

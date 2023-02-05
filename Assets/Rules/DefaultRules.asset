@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: DefaultRules
   m_EditorClassIdentifier: 
   enemyCount: 4
-  allowedDiscards: 1
+  drawCount: 1
   handSize: 5
-  queueSize: 3
+  queueSize: 4
   deckConfig:
   - card: 0
     count: 2
   - card: 1
     count: 2
   - card: 2
-    count: 2
+    count: 23
   - card: 3
     count: 1
   - card: 4
