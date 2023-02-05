@@ -151,8 +151,9 @@ public static class Database
           var playerId = (long)record.Child("player_id").Value;
           var created = record.Child("created").Value.ToString();
           var actionId = (long)record.Child("action_id").Value;
+          var phase = record.Child("phase").Value.ToString();
           var data = record.Child("data").Value as List<int>;
-          return new HistorySchema((int)playerId, (int)actionId, data, created);
+          return new HistorySchema((int)playerId, (int)actionId, phase, data, created);
         }).ToList();
       }
 

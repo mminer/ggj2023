@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviour
       var gameCode = GetGameCode();
       var playerId = gameState.localPlayerIndex;
       var actionId = gameState.roundActions.Count - 1;
+      var phase = gameState.phase.ToString();
       var roundAction = gameState.latestRoundActionGroup[gameState.localPlayerIndex];
 
       var cards = roundAction switch
@@ -51,7 +52,7 @@ public class NetworkManager : MonoBehaviour
       };
 
       var data = cards.Select(card => (int)card).ToList();
-      var historySchema = new HistorySchema(playerId, actionId, data);
+      var historySchema = new HistorySchema(playerId, actionId, phase, data);
       Database.AddHistory(gameCode, historySchema);
     }
     
