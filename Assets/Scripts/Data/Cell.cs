@@ -5,6 +5,6 @@ using UnityEngine;
 /// </summary>
 public class Cell : RogueSharp.Cell
 {
-    public Item item;
+    public bool freeToSpawnOn = true;
     public Vector3Int position => new(X, 0, Y);
 }

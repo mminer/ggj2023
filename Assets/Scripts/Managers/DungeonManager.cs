@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
@@ -10,6 +9,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] Hero heroPrefab;
 
     [Header("Cell Prefabs")]
+    [SerializeField] Transform exitPrefab;
     [SerializeField] Transform groundPrefab;
     [SerializeField] Transform wallPrefab;
 
@@ -37,38 +37,21 @@ public class DungeonManager : MonoBehaviour
             }
         }
 
+        Instantiate(exitPrefab, gameState.dungeon.exitPosition, Quaternion.identity, transform);
+
         // Spawn enemies:
 
         gameState.enemies.Clear();
-        var enemyPositions = new HashSet<Vector3Int>();
 
-        for (var i = 0; i < gameState.rules.enemyCount; i++)
+        foreach (var position in gameState.dungeon.enemySpawnPositions)
         {
-            Cell enemyCell;
-
-            // Avoid spawning enemy in same cell as other enemy.
-            do
-            {
-                enemyCell = gameState.dungeon.GetRandomWalkableCell();
-            } while (enemyPositions.Contains(enemyCell.position));
-
-            var enemy = Instantiate(enemyPrefab, enemyCell.position, Quaternion.identity, transform);
-            enemy.name = $"Enemy {i}";
+            var enemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
             gameState.enemies.Add(enemy);
-            enemyPositions.Add(enemyCell.position);
         }
 
         // Spawn hero:
 
-        Cell heroCell;
-
-        // Avoid spawning hero in same cell as enemy.
-        do
-        {
-            heroCell = gameState.dungeon.GetRandomWalkableCell();
-        } while (enemyPositions.Contains(heroCell.position));
-
-        gameState.hero = Instantiate(heroPrefab, heroCell.position, Quaternion.identity, transform);
+        gameState.hero = Instantiate(heroPrefab, gameState.dungeon.heroSpawnPosition, Quaternion.identity, transform);
         gameState.hero.gameState = gameState;
     }
 }

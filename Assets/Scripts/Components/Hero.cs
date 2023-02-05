@@ -4,10 +4,11 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     public GameState gameState { private get; set; }
+    public Vector3Int position => Vector3Int.RoundToInt(transform.position);
 
     public void ApplyCard(Card card)
     {
-        Debug.Log($"Playing card: {card}");
+        Debug.Log($"Applying card: {card}");
 
         switch (card)
         {

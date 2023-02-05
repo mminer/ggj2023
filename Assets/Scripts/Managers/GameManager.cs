@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Events")]
     [SerializeField] GameEvent cardsUpdatedEvent;
+    [SerializeField] GameEvent gameOverEvent;
     [SerializeField] GameEvent phaseChangedEvent;
 
     public void StartGame()
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameLoop()
     {
-        // TODO: break when player reaches exit
         while (true)
         {
             // Draw and discard:
@@ -55,6 +55,14 @@ public class GameManager : MonoBehaviour
                     var card = submitQueueAction.cards[queueIndex];
                     gameState.hero.ApplyCard(card);
                 }
+            }
+
+            // Check win and loss conditions:
+
+            if (gameState.hero.position == gameState.dungeon.exitPosition)
+            {
+                gameOverEvent.Invoke();
+                yield break;
             }
 
             // Prepare for next round:
