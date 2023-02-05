@@ -1,49 +1,58 @@
 using RogueSharp.Random;
-using UnityEngine;
+using System;
 
 /// <summary>
-/// Wraps Unity's random number generator to use with RogueSharp.
+/// Wraps a random number generator to use with RogueSharp. And any other time randomness affects gameplay.
 /// </summary>
 public class RandomNumberGenerator : IRandom
 {
     public int randomSeed { get; private set; }
-    public long numberGenerated { get; private set; }
+
+    Random random;
+    long timesUsed;
 
     public RandomNumberGenerator(int randomSeed)
     {
+        this.random = new Random(randomSeed);
         this.randomSeed = randomSeed;
-        Random.InitState(randomSeed);
     }
 
     public int Next(int minValue, int maxValue)
     {
-        numberGenerated++;
-        return Random.Range(minValue, maxValue);
+        timesUsed++;
+        return random.Next(minValue, maxValue);
     }
 
     public int Next(int maxValue)
     {
-        return Next(0, maxValue);
+        timesUsed++;
+        return random.Next(maxValue);
     }
 
     public bool NextBool()
     {
-        return Next(0, 2) == 1;
+        timesUsed++;
+        return random.Next(2) == 1;
     }
 
     public void Restore(RandomState state)
     {
-        numberGenerated = state.NumberGenerated;
         randomSeed = state.Seed[0];
-        Random.InitState(randomSeed);
+        random = new Random(randomSeed);
+        timesUsed = state.NumberGenerated;
     }
 
     public RandomState Save()
     {
         return new RandomState
         {
-            NumberGenerated = numberGenerated,
+            NumberGenerated = timesUsed,
             Seed = new[] { randomSeed },
         };
+    }
+
+    public override string ToString()
+    {
+        return $"seed: {randomSeed}; times used: {timesUsed}";
     }
 }
