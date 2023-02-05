@@ -69,7 +69,10 @@ public class PlayUI : MonoBehaviour
     public void RefreshCardUI()
     {
         Debug.Log("Refreshing card UI.");
+
+        discardChoicesContainer.Clear();
         handContainer.Clear();
+        queueChoicesContainer.Clear();
 
         foreach (var card in gameState.localPlayer.hand)
         {
