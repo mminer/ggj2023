@@ -29,8 +29,8 @@ MonoBehaviour:
     count: 3
   - card: 5
     count: 3
-  mapWidth: 32
-  mapHeight: 32
-  maxRooms: 30
-  roomMaxSize: 10
-  roomMinSize: 3
+  mapWidth: 16
+  mapHeight: 16
+  mapFillProbability: 60
+  mapTotalIterations: 4
+  mapCutoffOfBigAreaFill: 3

@@ -37,7 +37,7 @@ public class Rules : ScriptableObject
     [Header("Map")]
     public int mapWidth = 32;
     public int mapHeight = 32;
-    public int maxRooms = 30;
-    public int roomMaxSize = 10;
-    public int roomMinSize = 3;
+    [Range(40, 60)] public int mapFillProbability = 50;
+    [Range(2, 5)] public int mapTotalIterations = 4;
+    [Range(0, 3)]public int mapCutoffOfBigAreaFill = 2;
 }

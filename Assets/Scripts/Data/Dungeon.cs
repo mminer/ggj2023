@@ -22,12 +22,12 @@ public class Dungeon
     {
         this.rng = rng;
 
-        var mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map<Cell>, Cell>(
+        var mapCreationStrategy = new CaveMapCreationStrategy<Map<Cell>, Cell>(
             rules.mapWidth,
             rules.mapHeight,
-            rules.maxRooms,
-            rules.roomMaxSize,
-            rules.roomMinSize,
+            rules.mapFillProbability,
+            rules.mapTotalIterations,
+            rules.mapCutoffOfBigAreaFill,
             rng);
 
         map = Map.Create(mapCreationStrategy);

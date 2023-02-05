@@ -15,6 +15,12 @@ public class DungeonManager : MonoBehaviour
 
     public void GenerateDungeon()
     {
+        // Clear existing dungeon objects.
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         gameState.dungeon = new Dungeon(gameState.rng, gameState.rules);
         Debug.Log("Dungeon:\n" + gameState.dungeon);
 
