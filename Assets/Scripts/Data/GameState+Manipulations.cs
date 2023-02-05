@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class GameState
 {
@@ -55,14 +56,10 @@ public partial class GameState
         startingPlayerIndex = rng.Next(players.Length);
     }
 
-    public void SetRoundAction(IRoundAction roundAction, int playerIndex)
+    public void SetRoundAction(IRoundAction roundAction)
     {
-        latestRoundActionGroup[playerIndex] = roundAction;
-    }
-
-    public void SetRoundActionForLocalPlayer(IRoundAction roundAction)
-    {
-        SetRoundAction(roundAction, localPlayerIndex);
+        Debug.Log($"Setting round action: {roundAction}");
+        latestRoundActionGroup[roundAction.playerIndex] = roundAction;
     }
 
     void DealHands()

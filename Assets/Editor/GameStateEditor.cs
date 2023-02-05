@@ -33,14 +33,14 @@ public class GameStateEditor : Editor
         }
 
         EditorGUILayout.LabelField("Phase", isGameActive ? gameState.phase.ToString() : "");
-        EditorGUILayout.LabelField("Starting Player", isGameActive ? string.Join(", ", gameState.playerOrder) : "");
+        EditorGUILayout.LabelField("Player Order", isGameActive ? string.Join(", ", gameState.playerOrder) : "");
 
         PrintCards("Deck", gameState.deck);
         PrintCards("Discard Pile", gameState.discardPile);
 
         foreach (var player in gameState.players)
         {
-            PrintCards($"Player {player.id} Hand", player.hand);
+            PrintCards($"Player {player.index} Hand", player.hand);
         }
     }
 
@@ -50,7 +50,7 @@ public class GameStateEditor : Editor
 
         foreach (var card in cards)
         {
-            GUILayout.Label(card.ToString());
+            GUILayout.Label(ObjectNames.NicifyVariableName(card.ToString()));
         }
     }
 }

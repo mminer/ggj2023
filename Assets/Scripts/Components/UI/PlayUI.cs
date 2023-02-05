@@ -29,7 +29,7 @@ public class PlayUI : MonoBehaviour
                 .ToArray();
 
             var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, queue);
-            gameState.SetRoundActionForLocalPlayer(roundAction);
+            gameState.SetRoundAction(roundAction);
         };
 
         submitButton.SetEnabled(false);
