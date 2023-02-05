@@ -1,5 +1,35 @@
 {
   "dependencies": {
+    "com.google.external-dependency-manager": {
+      "version": "file:com.google.external-dependency-manager-1.2.175",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.google.firebase.app": {
+      "version": "file:com.google.firebase.app-10.4.0",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.175"
+      }
+    },
+    "com.google.firebase.auth": {
+      "version": "file:com.google.firebase.auth-10.4.0",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.google.firebase.app": "10.4.0"
+      }
+    },
+    "com.google.firebase.database": {
+      "version": "file:com.google.firebase.database-10.4.0",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.google.firebase.auth": "10.4.0"
+      }
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
