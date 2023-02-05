@@ -35,14 +35,12 @@ public class GameManager : MonoBehaviour
 
             SetPhase(Phase.Discard);
             dealer.Draw();
-            AddRoundActionGroup();
-            yield return new WaitUntil(HaveReceivedAllRoundActions);
+            yield return WaitToReceiveAllRoundActions();
 
             // Create Queue:
 
             SetPhase(Phase.CreateQueue);
-            AddRoundActionGroup();
-            yield return new WaitUntil(HaveReceivedAllRoundActions);
+            yield return WaitToReceiveAllRoundActions();
 
             // Apply Cards:
 
@@ -57,13 +55,6 @@ public class GameManager : MonoBehaviour
             dealer.ClearQueues();
             IncrementStartingPlayerIndex();
         }
-    }
-
-    void AddRoundActionGroup()
-    {
-        var group = new IRoundAction[gameState.players.Length];
-        gameState.roundActions.Add(group);
-        Debug.Log($"Round action index: {gameState.roundActions.Count - 1}");
     }
 
     bool HaveReceivedAllRoundActions()
@@ -83,5 +74,13 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Phase: {phase}");
         gameState.phase = phase;
         phaseChangedEvent.Invoke();
+    }
+
+    IEnumerator WaitToReceiveAllRoundActions()
+    {
+        var group = new IRoundAction[gameState.players.Length];
+        gameState.roundActions.Add(group);
+        Debug.Log($"Waiting to receive all round actions; index: {gameState.roundActions.Count - 1}");
+        yield return new WaitUntil(HaveReceivedAllRoundActions);
     }
 }
