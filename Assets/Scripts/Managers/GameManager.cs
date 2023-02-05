@@ -11,18 +11,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameEvent cardsUpdatedEvent;
     [SerializeField] GameEvent phaseChangedEvent;
 
-    Dealer dealer;
-
-    void Awake()
-    {
-        dealer = new Dealer(gameState);
-    }
-
     public void StartGame()
     {
-        dealer.GenerateDeckAndDealHands();
+        gameState.RandomizeStartingPlayer();
+        gameState.GenerateDeckAndDealHands();
         cardsUpdatedEvent.Invoke();
-        gameState.startingPlayerIndex = gameState.rng.Next(gameState.players.Length);
         StartCoroutine(GameLoop());
     }
 
@@ -34,7 +27,7 @@ public class GameManager : MonoBehaviour
             // Discard:
 
             SetPhase(Phase.Discard);
-            dealer.Draw();
+            gameState.DrawCardsFromDeck();
             yield return WaitToReceiveAllRoundActions();
 
             // Create Queue:
@@ -46,14 +39,13 @@ public class GameManager : MonoBehaviour
 
             SetPhase(Phase.ApplyCards);
 
-            foreach (var card in dealer.GetInterleavedQueue())
+            foreach (var card in gameState.InterleaveCardQueue())
             {
                 yield return new WaitForSeconds(cardApplyDelaySeconds);
                 gameState.hero.ApplyCard(card);
             }
 
-            dealer.ClearQueues();
-            IncrementStartingPlayerIndex();
+            gameState.IncrementStartingPlayerIndex();
         }
     }
 
@@ -61,12 +53,6 @@ public class GameManager : MonoBehaviour
     {
         var group = gameState.roundActions[^1];
         return group.All(networkAction => networkAction != null);
-    }
-
-    void IncrementStartingPlayerIndex()
-    {
-        gameState.startingPlayerIndex++;
-        gameState.startingPlayerIndex %= gameState.players.Length;
     }
 
     void SetPhase(Phase phase)
@@ -78,8 +64,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator WaitToReceiveAllRoundActions()
     {
-        var group = new IRoundAction[gameState.players.Length];
-        gameState.roundActions.Add(group);
+        gameState.AddRoundActionGroup();
         Debug.Log($"Waiting to receive all round actions; index: {gameState.roundActions.Count - 1}");
         yield return new WaitUntil(HaveReceivedAllRoundActions);
     }

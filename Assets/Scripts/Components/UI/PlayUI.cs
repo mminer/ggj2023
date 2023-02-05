@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 public class PlayUI : MonoBehaviour
 {
     [SerializeField] GameState gameState;
-    [SerializeField] GameEvent roundActionSubmittedEvent;
 
     Label gameCodeLabel;
     VisualElement handContainer;
@@ -30,8 +29,7 @@ public class PlayUI : MonoBehaviour
                 .ToArray();
 
             var roundAction = new IRoundAction.SubmitQueue(gameState.localPlayerIndex, queue);
-            gameState.roundActions[^1][gameState.localPlayerIndex] = roundAction;
-            roundActionSubmittedEvent.Invoke();
+            gameState.SetRoundActionForLocalPlayer(roundAction);
         };
 
         submitButton.SetEnabled(false);

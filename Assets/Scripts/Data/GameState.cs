@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Android;
 
 [CreateAssetMenu]
-public class GameState : ScriptableObject
+public partial class GameState : ScriptableObject
 {
     [SerializeField] public Rules rules;
 
@@ -42,9 +42,6 @@ public class GameState : ScriptableObject
         }
     }
 
-    // To append a round action:
-    //
-    //     roundActions[^1][localPlayerIndex] = roundAction;
     public readonly List<IRoundAction[]> roundActions = new();
 
     // Cards:

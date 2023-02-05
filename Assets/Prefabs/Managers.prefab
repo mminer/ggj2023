@@ -293,7 +293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
-  roundActionSubmittedEvent: {fileID: 11400000, guid: 21b8c992bb75346a5bb9ff8d5ca28ef3, type: 2}
 --- !u!114 &2099998851
 MonoBehaviour:
   m_ObjectHideFlags: 0
