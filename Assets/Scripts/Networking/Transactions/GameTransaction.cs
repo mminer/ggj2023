@@ -14,7 +14,7 @@ public class GameTransaction
   }
   
   TransactionResult CreateGameTransaction(MutableData mutableData) {
-      Debug.Log("Mutating games: " + mutableData);
+      Debug.Log("Mutating games: " + mutableData.Value);
       
       var games = mutableData.Value as Dictionary<string, object>;
 

@@ -30,7 +30,7 @@ public class DatabaseManager : MonoBehaviour {
   protected virtual void InitializeFirebase() {
     FirebaseApp app = FirebaseApp.DefaultInstance;
     FirebaseDatabase.DefaultInstance.GoOnline();
-    StartListener();
+    // StartListener();
     isFirebaseInitialized = true;
   }
 
