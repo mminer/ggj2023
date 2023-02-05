@@ -7,8 +7,7 @@ using UnityEngine;
 public class RandomNumberGenerator : IRandom
 {
     public int randomSeed { get; private set; }
-
-    long numberGenerated;
+    public long numberGenerated { get; private set; }
 
     public RandomNumberGenerator(int randomSeed)
     {
