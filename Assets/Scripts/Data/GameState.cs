@@ -45,6 +45,7 @@ public partial class GameState : ScriptableObject
 
     public readonly List<IRoundAction[]> roundActions = new();
     public IRoundAction[] latestRoundActionGroup => roundActions[^1];
+    public IRoundAction latestLocalPlayerRoundAction => latestRoundActionGroup[localPlayerIndex];
 
     // Cards:
 

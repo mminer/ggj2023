@@ -44,9 +44,8 @@ public class NetworkManager : MonoBehaviour
       var playerId = gameState.localPlayerIndex;
       var actionId = gameState.roundActions.Count - 1;
       var phase = gameState.phase.ToString();
-      var roundAction = gameState.latestRoundActionGroup[gameState.localPlayerIndex];
 
-      var cards = roundAction switch
+      var cards = gameState.latestLocalPlayerRoundAction switch
       {
         RoundAction_Discard discardAction => discardAction.cards,
         RoundAction_SubmitQueue submitQueueAction => submitQueueAction.cards,
