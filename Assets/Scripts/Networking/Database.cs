@@ -145,13 +145,16 @@ public static class Database
 
       if (e2.Snapshot != null && e2.Snapshot.ChildrenCount > 0)
       {
-        history = e2.Snapshot.Children.Select((record, index) =>
+        history = e2.Snapshot.Children.Select((record) =>
         {
           var playerId = (long)record.Child("player_id").Value;
           var created = record.Child("created").Value.ToString();
           var actionId = (long)record.Child("action_id").Value;
           var phase = record.Child("phase").Value.ToString();
-          var data = record.Child("data").Value as List<int>;
+          
+          var dataAsObjectList = record.Child("data").Value as List<object>;
+          var data = dataAsObjectList.Select((d) => (int)(long)d).ToList();
+          
           return new HistorySchema((int)playerId, (int)actionId, phase, data, created);
         }).ToList();
       }
