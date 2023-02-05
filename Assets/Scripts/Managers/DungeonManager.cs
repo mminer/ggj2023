@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
@@ -5,7 +6,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] GameState gameState;
 
     [Header("Character Prefabs")]
-    [SerializeField] Transform enemyPrefab;
+    [SerializeField] Enemy enemyPrefab;
     [SerializeField] Hero heroPrefab;
 
     [Header("Cell Prefabs")]
@@ -31,9 +32,8 @@ public class DungeonManager : MonoBehaviour
             for (var z = 0; z < gameState.rules.mapHeight; z++)
             {
                 var position = new Vector3Int(x, 0, z);
-                var cell = gameState.dungeon[position];
 
-                if (!cell.IsWalkable)
+                if (!gameState.dungeon.IsWalkable(position))
                 {
                     Instantiate(wallPrefab, position, Quaternion.identity, transform);
                 }
@@ -57,6 +57,5 @@ public class DungeonManager : MonoBehaviour
         // Spawn hero:
 
         gameState.hero = Instantiate(heroPrefab, gameState.dungeon.heroSpawnPosition, Quaternion.identity, transform);
-        gameState.hero.gameState = gameState;
     }
 }

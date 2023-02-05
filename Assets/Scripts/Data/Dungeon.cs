@@ -9,14 +9,18 @@ using UnityEngine;
 /// </summary>
 public class Dungeon
 {
-    public Cell this[Vector3Int position] => map[position];
+    class Cell : RogueSharp.Cell
+    {
+        public Vector3Int position => new(X, 0, Y);
+    }
 
-    public readonly HashSet<Vector3Int> enemySpawnPositions = new();
+    public readonly List<Vector3Int> enemySpawnPositions = new();
     public readonly Vector3Int exitPosition;
     public readonly Vector3Int heroSpawnPosition;
 
     readonly Map<Cell> map;
     readonly RandomNumberGenerator rng;
+    readonly PathFinder<Cell> pathFinder;
 
     public Dungeon(RandomNumberGenerator rng, Rules rules)
     {
@@ -31,15 +35,36 @@ public class Dungeon
             rng);
 
         map = Map.Create(mapCreationStrategy);
+        pathFinder = new PathFinder<Cell>(map);
 
-        for (var i = 0; i < rules.enemyCount; i++)
+        // Reserve spawn positions.
+        var walkablePositions = GetRandomWalkablePositions(rules.enemyCount + 2);
+        enemySpawnPositions.AddRange(walkablePositions.Take(rules.enemyCount));
+        exitPosition = walkablePositions[^2];
+        heroSpawnPosition = walkablePositions[^1];
+    }
+
+    public bool IsWalkable(Vector3Int position)
+    {
+        return map[position].IsWalkable;
+    }
+
+    public bool TryGetPath(Vector3Int start, Vector3Int finish, out IEnumerable<Vector3Int> path)
+    {
+        var shortestPath = pathFinder.TryFindShortestPath(map[start], map[finish]);
+
+        if (shortestPath == null)
         {
-            var position = ReserveRandomSpawnPosition();
-            enemySpawnPositions.Add(position);
+            path = Enumerable.Empty<Vector3Int>();
+            return false;
         }
 
-        exitPosition = ReserveRandomSpawnPosition();
-        heroSpawnPosition = ReserveRandomSpawnPosition();
+        path = shortestPath.Steps
+            .Cast<Cell>()
+            .Select(cell => cell.position)
+            .Skip(1);
+
+        return true;
     }
 
     public override string ToString()
@@ -47,19 +72,24 @@ public class Dungeon
         return map.ToString();
     }
 
-    Vector3Int ReserveRandomSpawnPosition()
+    Vector3Int[] GetRandomWalkablePositions(int amount)
     {
+        var positions = new HashSet<Vector3Int>();
         var walkableCells = map.walkableCells.ToArray();
 
-        while (true)
+        for (var i = 0; i < amount; i++)
         {
-            var cell = walkableCells[rng.Next(walkableCells.Length)];
-
-            if (cell.freeToSpawnOn)
+            while (true)
             {
-                cell.freeToSpawnOn = false;
-                return cell.position;
+                var cell = walkableCells[rng.Next(walkableCells.Length)];
+
+                if (positions.Add(cell.position))
+                {
+                    break;
+                }
             }
         }
+
+        return positions.ToArray();
     }
 }

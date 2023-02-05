@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-    public GameState gameState { private get; set; }
+    [SerializeField] GameState gameState;
+
     public Vector3Int position => Vector3Int.RoundToInt(transform.position);
 
     public void ApplyCard(Card card)
@@ -44,13 +45,13 @@ public class Hero : MonoBehaviour
 
     void MoveInDirection(Vector3Int direction)
     {
-        var nextPosition = Vector3Int.RoundToInt(transform.position) + direction;
+        var newPosition = Vector3Int.RoundToInt(transform.position) + direction;
 
-        if (!gameState.dungeon[nextPosition].IsWalkable)
+        if (!gameState.dungeon.IsWalkable(newPosition))
         {
             return;
         }
 
-        transform.position = nextPosition;
+        transform.position = newPosition;
     }
 }

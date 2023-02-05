@@ -60,6 +60,12 @@ public class GameManager : MonoBehaviour
                 }
             }
 
+            foreach (var enemy in gameState.enemies)
+            {
+                yield return new WaitForSeconds(cardApplyDelaySeconds);
+                enemy.MoveTowardsHero();
+            }
+
             // Check win and loss conditions:
 
             if (gameState.hero.position == gameState.dungeon.exitPosition)
