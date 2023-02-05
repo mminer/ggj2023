@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
             // Draw and discard:
 
             gameState.DrawCardsFromDeck();
+            cardsUpdatedEvent.Invoke();
             SetPhase(Phase.Discard);
             yield return WaitToReceiveAllRoundActions();
 
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
                 var roundAction = (RoundAction_Discard)gameState.latestRoundActionGroup[playerIndex];
                 gameState.Discard(playerIndex, roundAction.cards);
             }
+
+            cardsUpdatedEvent.Invoke();
 
             // Create queue:
 
