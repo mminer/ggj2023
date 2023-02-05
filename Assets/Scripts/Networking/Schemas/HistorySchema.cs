@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class HistorySchema: BaseSchema
 {
+    public const string pathKey = "history";
+    
     private string created;
     private readonly int playerId;
     private readonly int actionId;

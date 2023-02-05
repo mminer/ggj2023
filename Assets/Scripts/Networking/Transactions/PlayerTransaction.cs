@@ -13,11 +13,12 @@ public class PlayerTransaction
   }
   
   TransactionResult AddPlayerTransaction(MutableData mutableData) {
-    if (mutableData.Value == null)
-    {
-      Debug.LogError("Player list was not found");
-      return TransactionResult.Abort();
-    }
+      if (mutableData.Value == null)
+      {
+        Debug.LogError("Player list was not found");
+        return TransactionResult.Abort();
+      }
+      
       var players = mutableData.Value as List<object>;
 
       if (players == null)
