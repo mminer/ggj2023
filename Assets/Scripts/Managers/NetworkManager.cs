@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
@@ -40,9 +41,16 @@ public class NetworkManager : MonoBehaviour
     {
       var gameCode = GetGameCode();
       var playerId = gameState.localPlayerIndex;
-      var actionId = gameState.roundActions.IndexOf(gameState.latestRoundActionGroup);
-      // var action = gameState.latestRoundActionGroup[playerId];
-      var data = new List<int>(); // TODO: populate data
+      var actionId = gameState.roundActions.Count - 1;
+      var roundAction = gameState.latestRoundActionGroup[gameState.localPlayerIndex];
+
+      var cards = roundAction switch
+      {
+        RoundAction_Discard discardAction => discardAction.cards,
+        RoundAction_SubmitQueue submitQueueAction => submitQueueAction.cards,
+      };
+
+      var data = cards.Select(card => (int)card).ToList();
       var historySchema = new HistorySchema(playerId, actionId, data);
       Database.AddHistory(gameCode, historySchema);
     }
