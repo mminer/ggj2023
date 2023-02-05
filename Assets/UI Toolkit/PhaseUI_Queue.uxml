@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Label tabindex="-1" text="Queue:" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
     <ui:VisualElement name="queue-choices-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
-    <ui:Button text="Submit Queue" display-tooltip-when-elided="true" name="submit-queue-button" />
+    <ui:Button text="Submit Queue" display-tooltip-when-elided="true" name="queue-submit-button" />
 </ui:UXML>

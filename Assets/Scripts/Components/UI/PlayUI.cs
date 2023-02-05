@@ -8,6 +8,8 @@ public class PlayUI : MonoBehaviour
     [SerializeField] GameState gameState;
     [SerializeField] GameEvent roundActionSubmittedEvent;
 
+    VisualElement root;
+
     Button discardButton;
     VisualElement discardChoicesContainer;
     VisualElement discardPhaseContainer;
@@ -16,11 +18,11 @@ public class PlayUI : MonoBehaviour
     Label phaseLabel;
     VisualElement queueChoicesContainer;
     VisualElement queuePhaseContainer;
-    Button submitQueueButton;
+    Button queueSubmitButton;
 
     void Awake()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement;
 
         discardButton = root.Q<Button>("discard-button");
         discardButton.clicked += HandleDiscardButtonClick;
@@ -36,9 +38,9 @@ public class PlayUI : MonoBehaviour
         queuePhaseContainer = root.Q("queue-phase-container");
         queuePhaseContainer.visible = false;
 
-        submitQueueButton = root.Q<Button>("submit-queue-button");
-        submitQueueButton.SetEnabled(false);
-        submitQueueButton.clicked += HandleSubmitQueueButtonClick;
+        queueSubmitButton = root.Q<Button>("queue-submit-button");
+        queueSubmitButton.SetEnabled(false);
+        queueSubmitButton.clicked += HandleSubmitQueueButtonClick;
     }
 
     public void RefreshCardUI()
@@ -73,6 +75,7 @@ public class PlayUI : MonoBehaviour
         phaseLabel.text = $"Phase: {gameState.phase}";
         discardPhaseContainer.visible = gameState.phase == Phase.Discard;
         queuePhaseContainer.visible = gameState.phase == Phase.Queue;
+        UnfreezeUI();
     }
 
     void HandleDiscardButtonClick()
@@ -87,7 +90,14 @@ public class PlayUI : MonoBehaviour
         var roundAction = new RoundAction_Discard(gameState.localPlayerIndex, cards);
         gameState.SetRoundAction(roundAction);
         roundActionSubmittedEvent.Invoke();
+
         discardButton.SetEnabled(false);
+        FreezeUI();
+    }
+
+    void FreezeUI()
+    {
+        root.SetEnabled(false);
     }
 
     void HandleSubmitQueueButtonClick()
@@ -102,7 +112,9 @@ public class PlayUI : MonoBehaviour
         var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, cards);
         gameState.SetRoundAction(roundAction);
         roundActionSubmittedEvent.Invoke();
-        submitQueueButton.SetEnabled(false);
+
+        queueSubmitButton.SetEnabled(false);
+        FreezeUI();
     }
 
     void MoveCardBetweenHandAndChoicesContainer(Button cardButton)
@@ -131,6 +143,11 @@ public class PlayUI : MonoBehaviour
     void RefreshButtonEnabledStates()
     {
         discardButton.SetEnabled(discardChoicesContainer.childCount == gameState.rules.drawCount);
-        submitQueueButton.SetEnabled(queueChoicesContainer.childCount == gameState.rules.queueSize);
+        queueSubmitButton.SetEnabled(queueChoicesContainer.childCount == gameState.rules.queueSize);
+    }
+
+    void UnfreezeUI()
+    {
+        root.SetEnabled(true);
     }
 }
