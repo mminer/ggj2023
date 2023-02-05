@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class PlayerSchema: BaseSchema
 {
+    public const string pathKey = "players";
+    
     private string created;
     private readonly string name;
     private readonly int icon;

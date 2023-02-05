@@ -14,11 +14,20 @@ public class NetworkManager : MonoBehaviour
       var gameTransaction = new GameTransaction(gameSchema);
       gameTransaction.CreateGame();
     }
+
+    public void JoinGame()
+    {
+      var playerSchema = new PlayerSchema(1, "Player2", 0);
+      var seed = gameState.randomSeed;
+      var gameCode = GameCodeUtility.RandomSeedToGameCode(seed);
+      var playerTransaction = new PlayerTransaction(playerSchema);
+      playerTransaction.JoinGame(gameCode);
+    }
 }
 
 /*
 {
-  "Rooms": {
+  "Games": {
     "ABCD": {
       "created": "2023-02-03 11:22:52 PM",
       "ended": "2023-02-03 11:22:52 PM",

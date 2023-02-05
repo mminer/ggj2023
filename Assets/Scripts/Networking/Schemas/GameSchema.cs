@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class GameSchema: BaseSchema
 {
-    public const string parentPath = "Games";
+    public const string pathKey = "Games";
     
     public readonly string gameCode;
     private readonly string created;
@@ -27,8 +27,8 @@ public class GameSchema: BaseSchema
         {
             ["created"] = created,
             ["ended"] = ended,
-            ["players"] = players.Select((player) => player.ToDict()).ToList(),
-            ["history"] = history.Select((action) => action.ToDict().ToList()),
+            ["players"] = players.Select((player) => player.ToDict() as object).ToList(),
+            ["history"] = history.Select((action) => action.ToDict() as object).ToList(),
         };
     }
 }

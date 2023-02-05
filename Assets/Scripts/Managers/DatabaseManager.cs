@@ -18,7 +18,9 @@ public class DatabaseManager : MonoBehaviour {
   protected virtual void Start() {
     FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
       dependencyStatus = task.Result;
-      if (dependencyStatus == DependencyStatus.Available) {
+      if (dependencyStatus == DependencyStatus.Available)
+      {
+        Debug.Log("Firebase dependencies are OK");
         InitializeFirebase();
       } else {
         Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
@@ -32,6 +34,7 @@ public class DatabaseManager : MonoBehaviour {
     FirebaseDatabase.DefaultInstance.GoOnline();
     // StartListener();
     isFirebaseInitialized = true;
+    Debug.Log("Firebase initialized");
   }
 
   protected void StartListener() {
