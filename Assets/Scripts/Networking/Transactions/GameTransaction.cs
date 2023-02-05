@@ -3,48 +3,45 @@ using Firebase.Database;
 using Firebase.Extensions;
 using UnityEngine;
 
-public class GameTransaction
+public static class GameTransaction
 {
-  private GameSchema game;
-
-  public GameTransaction(GameSchema game)
+ public static void CreateGame(GameSchema game, PlayerSchema player)
   {
-    this.game = game;
-  }
-  
-  TransactionResult CreateGameTransaction(MutableData mutableData) {
-      var games = mutableData.Value as Dictionary<string, object>;
-      
-      if (games == null)
-      {
-        Debug.Log("No games found, creating new object");
-        games = new Dictionary<string, object>();
-      }
-      
-      games.Add(game.gameCode, game.ToDict());
-      
-      // You must set the Value to indicate data at that location has changed.
-      mutableData.Value = games;
-      return TransactionResult.Success(mutableData);
-  }
-
-  public void CreateGame()
-  {
-    var path = GameSchema.pathKey;
-    DatabaseReference reference = FirebaseDatabase.DefaultInstance.GetReference(path);
-
-    Debug.Log("Running CreateGame Transaction: " + path);
+    var database = FirebaseDatabase.DefaultInstance.RootReference;
+    var path = $"/{GameSchema.pathKey}/{game.gameCode}";
+    var childUpdates = new Dictionary<string, object>
+    {
+      [path] = game.ToDict(),
+    };
     
-    // Use a transaction to ensure that we do not encounter issues with simultaneous updates.
-    reference.RunTransaction(CreateGameTransaction)
-      .ContinueWithOnMainThread(task => {
-        if (task.Exception != null) {
-          Debug.Log(task.Exception.ToString());
-        } else if (task.IsCompleted) {
-          Debug.Log("CreateGame Transaction complete: " + path);
-        }
-      });
+    Debug.Log("Running CreateGame Transaction: " + path);
+    database.UpdateChildrenAsync(childUpdates);
+    
+    AddDefaultPlayer(game, player);
   }
+
+ static void AddDefaultPlayer(GameSchema game, PlayerSchema player)
+ {
+   var database = FirebaseDatabase.DefaultInstance.RootReference;
+   var playersRef = database.Child(GameSchema.pathKey).Child(game.gameCode).Child(PlayerSchema.pathKey);
+   var key = playersRef.Push().Key;
+   var path = $"/{GameSchema.pathKey}/{game.gameCode}/{PlayerSchema.pathKey}/{key}";
+   
+   var childUpdates = new Dictionary<string, object>
+   {
+     [path] = player.ToDict(),
+   };
+    
+   Debug.Log("Running AddDefaultPlayer Transaction: " + path);
+   database.UpdateChildrenAsync(childUpdates);
+ }
+ 
+ public static void EndGame(GameSchema game)
+ {
+   Debug.Log("Running EndGame Transaction: " + game.gameCode);
+   var database = FirebaseDatabase.DefaultInstance.RootReference;
+   database.Child(GameSchema.pathKey).Child(game.gameCode).Child("ended").SetValueAsync(game.ended);
+ }
 }
 /*
  TransactionResult AddScoreTransaction(MutableData mutableData) {

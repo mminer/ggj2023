@@ -168,8 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
   gameStartEvent: {fileID: 11400000, guid: 73954370fb7264cb4940c8fa0d16849a, type: 2}
-  gameCreateEvent: {fileID: 0}
-  gameJoinEvent: {fileID: 0}
+  gameCreateEvent: {fileID: 11400000, guid: 64d1b1563f0564973a7f8128511a4515, type: 2}
+  gameJoinEvent: {fileID: 11400000, guid: f324327c89be8436d8f4ae758a840722, type: 2}
 --- !u!1 &1659775858
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +556,7 @@ GameObject:
   - component: {fileID: 7870376759330972918}
   - component: {fileID: 4736118527482543221}
   - component: {fileID: 1384835158750395524}
+  - component: {fileID: 624610970}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -650,6 +651,34 @@ MonoBehaviour:
       - m_Target: {fileID: 6302849887104663506}
         m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
         m_MethodName: JoinGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &624610970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478797712179888121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 21b8c992bb75346a5bb9ff8d5ca28ef3, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6302849887104663506}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: RecordAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

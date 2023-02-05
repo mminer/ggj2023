@@ -9,17 +9,18 @@ public class GameSchema: BaseSchema
     private readonly string created;
       
     public string ended;
-    public List<PlayerSchema> players;
-    public List<HistorySchema> history;
 
-    public GameSchema(string gameCode, List<PlayerSchema> players, List<HistorySchema> history)
+    public GameSchema(string gameCode)
     {
         this.gameCode = gameCode;
         created = GetCurrentTimestamp();
         ended = null;
-        this.players = players;
-        this.history = history;
     }
+
+    public void EndGame()
+    {
+        ended = GetCurrentTimestamp();
+    } 
 
     public override Dictionary<string, object> ToDict()
     {
@@ -27,8 +28,8 @@ public class GameSchema: BaseSchema
         {
             ["created"] = created,
             ["ended"] = ended,
-            ["players"] = players.Select((player) => player.ToDict() as object).ToList(),
-            ["history"] = history.Select((action) => action.ToDict() as object).ToList(),
+            ["players"] = new Dictionary<string, object>(),
+            ["history"] = new Dictionary<string, object>(),
         };
     }
 }

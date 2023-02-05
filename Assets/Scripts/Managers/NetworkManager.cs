@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
@@ -7,29 +8,36 @@ public class NetworkManager : MonoBehaviour
   
     public void CreateGame()
     {
-      var playerSchema = new PlayerSchema(0, "Player1", 0);
+      var playerSchema = new PlayerSchema(gameState.localPlayerIndex, "Player1", 0);
       var gameCode = GetGameCode();
-      var gameSchema = new GameSchema(gameCode, new List<PlayerSchema>(){playerSchema}, new List<HistorySchema>());
-      var gameTransaction = new GameTransaction(gameSchema);
-      gameTransaction.CreateGame();
+      var gameSchema = new GameSchema(gameCode);
+      GameTransaction.CreateGame(gameSchema, playerSchema);
     }
 
     public void JoinGame()
     {
       var playerSchema = new PlayerSchema(1, "Player2", 0);
       var gameCode = GetGameCode();
-      var playerTransaction = new PlayerTransaction(playerSchema);
-      playerTransaction.JoinGame(gameCode);
+      PlayerTransaction.JoinGame(gameCode, playerSchema);
+    }
+    
+    public void EndGame()
+    {
+      var gameCode = GetGameCode();
+      var gameSchema = new GameSchema(gameCode);
+      gameSchema.EndGame();
+      GameTransaction.EndGame(gameSchema);
     }
     
     public void RecordAction()
     {
       var gameCode = GetGameCode();
-      // TODO: Figure out how to populate this schema
-      // See: gameState.lastRoundActionGroup[gameState.localPlayerIndex]
-      // var historySchema = new HistorySchema(gameState.phase.);
-      // var historyTransaction = new HistoryTransaction(historySchema);
-      // historyTransaction.AddHistory(gameCode);
+      var playerId = gameState.localPlayerIndex;
+      var actionId = gameState.roundActions.IndexOf(gameState.latestRoundActionGroup);
+      // var action = gameState.latestRoundActionGroup[playerId];
+      var data = new List<int>(); // TODO: populate data
+      var historySchema = new HistorySchema(playerId, actionId, data);
+      HistoryTransaction.AddHistory(gameCode, historySchema);
     }
 
     private string GetGameCode()
@@ -38,29 +46,3 @@ public class NetworkManager : MonoBehaviour
       return GameCodeUtility.RandomSeedToGameCode(seed);
     }
 }
-
-/*
-{
-  "Games": {
-    "ABCD": {
-      "created": "2023-02-05T05:30:15",
-      "ended": "22023-02-05T05:30:15",
-      "players": [
-        {
-          "created": "2023-02-05T05:30:15",
-          "name": "Matthew",
-          "icon": 0,
-        }
-      ],
-      "history": [
-        {
-          "created": "2023-02-05T05:30:15",
-          "player_id": 0,
-          "action_id": 0,
-          "data": [0],
-        }
-      ]
-    }
-  }
-}
-*/
