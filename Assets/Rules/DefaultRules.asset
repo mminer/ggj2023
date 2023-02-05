@@ -24,7 +24,7 @@ MonoBehaviour:
   - card: 2
     count: 3
   - card: 3
-    count: 1
+    count: 20
   - card: 4
     count: 3
   - card: 5

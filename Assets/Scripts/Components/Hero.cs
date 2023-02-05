@@ -25,6 +25,7 @@ public class Hero : MonoBehaviour
 
             case Card.MoveRandom:
                 var randomDirection = MiscUtility.GetRandomDirection(gameState.rng);
+                Debug.Log($"Result of random direction card: {randomDirection}");
                 MoveInDirection(randomDirection);
                 break;
 

@@ -81,9 +81,8 @@ public class NetworkManager : MonoBehaviour
         return;
       }
 
-      for (var i = 0; i < history.Count; i++)
+      foreach (var item in history)
       {
-        var item = history[i];
         var roundGroup = gameState.roundActions[item.actionId];
 
         // If we already know about this round action, skip deserializing it again.
