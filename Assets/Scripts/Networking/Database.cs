@@ -118,7 +118,6 @@ public static class Database
       {
         players = e2.Snapshot.Children.Select((player, index) =>
         {
-          Debug.Log("SNAPSHOT OF: " + player.Key);
           var icon = (long)player.Child("icon").Value;
           var created = player.Child("created").Value.ToString();
           var name = player.Child("name").Value.ToString();
