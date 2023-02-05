@@ -535,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: b96eb60648c41463295d57c40df06c6b, type: 2}
 --- !u!1 &5241838403674734024
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,11 @@ public class Dungeon
         heroSpawnPosition = walkablePositions[^1];
     }
 
+    public IEnumerable<Vector3Int> GetAdjacentPositions(Vector3Int position, bool includeDiagonals = false)
+    {
+        return map.GetAdjacentCells(position, includeDiagonals).Select(cell => cell.position);
+    }
+
     public bool IsWalkable(Vector3Int position)
     {
         return map[position].IsWalkable;

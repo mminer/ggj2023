@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             foreach (var enemy in gameState.enemies)
             {
                 yield return new WaitForSeconds(cardApplyDelaySeconds);
-                enemy.MoveTowardsHero();
+                enemy.MoveTowardsOrAttackHero();
             }
 
             // Check win and loss conditions:

@@ -3,6 +3,8 @@
 /// </summary>
 public enum Card
 {
+    Attack,
+    Defend,
     DoNothing,
     MoveEast,
     MoveNorth,

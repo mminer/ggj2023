@@ -24,10 +24,14 @@ MonoBehaviour:
   - card: 2
     count: 3
   - card: 3
-    count: 20
+    count: 3
   - card: 4
     count: 3
   - card: 5
+    count: 3
+  - card: 6
+    count: 3
+  - card: 7
     count: 3
   mapWidth: 16
   mapHeight: 16
