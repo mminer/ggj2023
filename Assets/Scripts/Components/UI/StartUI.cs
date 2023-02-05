@@ -18,7 +18,6 @@ public class StartUI : MonoBehaviour
             gameState.randomSeed = Random.Range(0, Rules.maxRandomSeed);
 
             gameState.localPlayerIndex = 0;
-            gameState.localPlayer = Player.Player1;
             gameCreateEvent.Invoke();
             gameStartEvent.Invoke();
         };
@@ -29,7 +28,6 @@ public class StartUI : MonoBehaviour
             gameState.randomSeed = GameCodeUtility.GameCodeToRandomSeed(gameCodeField.value);
 
             gameState.localPlayerIndex = 1;
-            gameState.localPlayer = Player.Player2;
             gameJoinEvent.Invoke();
             gameStartEvent.Invoke();
         };
