@@ -23,21 +23,8 @@ public class PlayUI : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         discardButton = root.Q<Button>("discard-button");
+        discardButton.clicked += HandleDiscardButtonClick;
         discardButton.SetEnabled(false);
-
-        discardButton.clicked += () =>
-        {
-            Debug.Assert(discardChoicesContainer.childCount == gameState.rules.drawCount);
-
-            var cards = discardChoicesContainer
-                .Children()
-                .Select(child => (Card)child.userData)
-                .ToArray();
-
-            var roundAction = new RoundAction_Discard(gameState.localPlayerIndex, cards);
-            gameState.SetRoundAction(roundAction);
-            roundActionSubmittedEvent.Invoke();
-        };
 
         discardChoicesContainer = root.Q("discard-choices-container");
         discardPhaseContainer = root.Q("discard-phase-container");
@@ -45,25 +32,13 @@ public class PlayUI : MonoBehaviour
         handContainer = root.Q("hand-container");
         phaseLabel = root.Q<Label>("phase-label");
         queueChoicesContainer = root.Q("queue-choices-container");
+
         queuePhaseContainer = root.Q("queue-phase-container");
         queuePhaseContainer.visible = false;
 
         submitQueueButton = root.Q<Button>("submit-queue-button");
         submitQueueButton.SetEnabled(false);
-
-        submitQueueButton.clicked += () =>
-        {
-            Debug.Assert(queueChoicesContainer.childCount == gameState.rules.queueSize);
-
-            var cards = queueChoicesContainer
-                .Children()
-                .Select(child => (Card)child.userData)
-                .ToArray();
-
-            var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, cards);
-            gameState.SetRoundAction(roundAction);
-            roundActionSubmittedEvent.Invoke();
-        };
+        submitQueueButton.clicked += HandleSubmitQueueButtonClick;
     }
 
     public void RefreshCardUI()
@@ -98,6 +73,36 @@ public class PlayUI : MonoBehaviour
         phaseLabel.text = $"Phase: {gameState.phase}";
         discardPhaseContainer.visible = gameState.phase == Phase.Discard;
         queuePhaseContainer.visible = gameState.phase == Phase.Queue;
+    }
+
+    void HandleDiscardButtonClick()
+    {
+        Debug.Assert(discardChoicesContainer.childCount == gameState.rules.drawCount);
+
+        var cards = discardChoicesContainer
+            .Children()
+            .Select(child => (Card)child.userData)
+            .ToArray();
+
+        var roundAction = new RoundAction_Discard(gameState.localPlayerIndex, cards);
+        gameState.SetRoundAction(roundAction);
+        roundActionSubmittedEvent.Invoke();
+        discardButton.SetEnabled(false);
+    }
+
+    void HandleSubmitQueueButtonClick()
+    {
+        Debug.Assert(queueChoicesContainer.childCount == gameState.rules.queueSize);
+
+        var cards = queueChoicesContainer
+            .Children()
+            .Select(child => (Card)child.userData)
+            .ToArray();
+
+        var roundAction = new RoundAction_SubmitQueue(gameState.localPlayerIndex, cards);
+        gameState.SetRoundAction(roundAction);
+        roundActionSubmittedEvent.Invoke();
+        submitQueueButton.SetEnabled(false);
     }
 
     void MoveCardBetweenHandAndChoicesContainer(Button cardButton)
