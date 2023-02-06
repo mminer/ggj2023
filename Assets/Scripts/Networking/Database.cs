@@ -64,21 +64,41 @@ public static class Database
     database.UpdateChildrenAsync(childUpdates);
   }
   
-  public static void JoinGame(string gameCode, PlayerSchema player)
+  public static void JoinGame(string gameCode, PlayerSchema player, System.Action<string, bool> callback)
   {
-    var playersRef = database.Child(GameSchema.pathKey).Child(gameCode).Child(PlayerSchema.pathKey);
-    var key = playersRef.Push().Key;
-    var path = $"/{GameSchema.pathKey}/{gameCode}/{PlayerSchema.pathKey}/{key}";
+    FirebaseDatabase.DefaultInstance
+      .GetReference($"/{GameSchema.pathKey}/{gameCode}")
+      .GetValueAsync().ContinueWithOnMainThread(task => {
+        if (task.IsFaulted) {
+          Debug.LogError("[Database] Failed to lookup game code: " + gameCode);
+          callback(gameCode, false);
+        } else if (task.IsCompleted) {
+          DataSnapshot snapshot = task.Result;
+          
+          if (snapshot is not { Exists: true })
+          {
+            Debug.Log("[Database] Game code not found: " + gameCode);
+            callback(gameCode, false);
+            return;
+          }
+          
+          var playersRef = database.Child(GameSchema.pathKey).Child(gameCode).Child(PlayerSchema.pathKey);
+          var key = playersRef.Push().Key;
+          var path = $"/{GameSchema.pathKey}/{gameCode}/{PlayerSchema.pathKey}/{key}";
    
-    var childUpdates = new Dictionary<string, object>
-    {
-      [path] = player.ToDict(),
-    };
+          var childUpdates = new Dictionary<string, object>
+          {
+            [path] = player.ToDict(),
+          };
     
-    Debug.Log("[Database] Running JoinGame Transaction: " + path);
-    database.UpdateChildrenAsync(childUpdates);
+          Debug.Log("[Database] Running JoinGame Transaction: " + path);
+          database.UpdateChildrenAsync(childUpdates);
+          
+          callback(gameCode, true);
+        }
+      });
   }
- 
+
   public static void EndGame(GameSchema game)
   {
     Debug.Log("[Database] Running EndGame Transaction: " + game.gameCode);
@@ -99,7 +119,7 @@ public static class Database
     Debug.Log("[Database] Running AddHistory Transaction: " + path);
     database.UpdateChildrenAsync(childUpdates);
   }
-  
+
   public static void ListenForPlayerJoin(string gameCode, System.Action<string, List<PlayerSchema>> onPlayerJoined)
   {
     var path = $"{GameSchema.pathKey}/{gameCode}/{PlayerSchema.pathKey}";

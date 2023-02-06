@@ -17,7 +17,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
 
-            <ui:Label name="join-inputs-error" text="" />
+            <ui:Label name="title-game-error" text="" />
         </ui:VisualElement>
         <ui:Label name="title-credits" text="Created by Matthew Miner and Brad Keys\nGlobal Game Jam 2023" />
     </ui:VisualElement>

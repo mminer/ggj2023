@@ -53,6 +53,11 @@
     width: 100%;
 }
 
+#title-game-error {
+    color: red;
+    font-size: 24px;
+}
+
 #title-game-name-label {
 
 }

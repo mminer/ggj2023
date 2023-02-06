@@ -6,7 +6,9 @@ using UnityEngine;
 public class NetworkManager : MonoBehaviour
 {
     [SerializeField] GameState gameState;
-
+    [SerializeField] GameEvent gameAvailableEvent;
+    [SerializeField] GameEvent gameUnavailableEvent;
+    
     void Start()
     {
       Database.CheckDependenciesAndInitialize();
@@ -28,7 +30,7 @@ public class NetworkManager : MonoBehaviour
       var localPlayer = gameState.localPlayer;
       var playerSchema = new PlayerSchema(localPlayer.index, localPlayer.name, 0);
       var gameCode = GetGameCode();
-      Database.JoinGame(gameCode, playerSchema);
+      Database.JoinGame(gameCode, playerSchema, OnCheckGameAvailable);
       Database.ListenForHistory(gameCode, OnHistoryAdded);
     }
     
@@ -58,11 +60,28 @@ public class NetworkManager : MonoBehaviour
       var historySchema = new HistorySchema(playerId, actionId, phase, data);
       Database.AddHistory(gameCode, historySchema);
     }
-    
+
     private string GetGameCode()
     {
       var seed = gameState.randomSeed;
       return GameCodeUtility.RandomSeedToGameCode(seed);
+    }
+
+    void OnCheckGameAvailable(string gameCode, bool isGameAvailable)
+    {
+      if (!ValidateUpdateIsRelevant(gameCode, "OnCheckGameAvailable"))
+      {
+        return;
+      }
+
+      if (isGameAvailable)
+      {
+        gameAvailableEvent.Invoke();
+      }
+      else
+      {
+        gameUnavailableEvent.Invoke();
+      }
     }
 
     void OnPlayerJoined(string gameCode, List<PlayerSchema> players)

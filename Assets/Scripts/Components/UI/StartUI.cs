@@ -14,6 +14,7 @@ public class StartUI : MonoBehaviour
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Q<Label>("title-game-error").text = string.Empty;
         var nameInput = root.Q<TextField>("title-game-name-input");
         
         var codeInput = root.Q<TextField>("title-game-options-join-input");
@@ -77,8 +78,22 @@ public class StartUI : MonoBehaviour
             gameState.players[index] = new Player(index, playerName);
             
             gameJoinEvent.Invoke();
-            gameStartEvent.Invoke();
         };
+    }
+
+    public void OnGameAvailable()
+    {
+        Debug.Log("Game available!");
+        gameStartEvent.Invoke();
+    }
+    
+    public void OnGameUnavailable()
+    {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        var seed = gameState.randomSeed;
+        var gameCode = GameCodeUtility.RandomSeedToGameCode(seed);
+        var error = $"Unable to find game with code {gameCode}";
+        root.Q<Label>("title-game-error").text = error;
     }
 
     bool HasValidGameCode(string gameCode)

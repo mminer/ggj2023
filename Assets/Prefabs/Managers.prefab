@@ -116,6 +116,8 @@ GameObject:
   - component: {fileID: 108392196}
   - component: {fileID: 108392197}
   - component: {fileID: 108392198}
+  - component: {fileID: 8164689718715992274}
+  - component: {fileID: 7414565047788938656}
   m_Layer: 0
   m_Name: Start UI
   m_TagString: Untagged
@@ -170,6 +172,62 @@ MonoBehaviour:
   gameStartEvent: {fileID: 11400000, guid: 73954370fb7264cb4940c8fa0d16849a, type: 2}
   gameCreateEvent: {fileID: 11400000, guid: 64d1b1563f0564973a7f8128511a4515, type: 2}
   gameJoinEvent: {fileID: 11400000, guid: f324327c89be8436d8f4ae758a840722, type: 2}
+--- !u!114 &8164689718715992274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108392195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 06460720a7ce746d3b3e7b33af6b7818, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 108392198}
+        m_TargetAssemblyTypeName: StartUI, Assembly-CSharp
+        m_MethodName: OnGameAvailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7414565047788938656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108392195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcd8bf383d86402cb7dc049eae9a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b7bce22438d8e44debd07db13a1762c9, type: 2}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 108392198}
+        m_TargetAssemblyTypeName: StartUI, Assembly-CSharp
+        m_MethodName: OnGameUnavailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1659775858
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +679,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameState: {fileID: 11400000, guid: 2d121f2c4c64442948fb0b226a81e6fd, type: 2}
+  gameAvailableEvent: {fileID: 11400000, guid: 06460720a7ce746d3b3e7b33af6b7818, type: 2}
+  gameUnavailableEvent: {fileID: 11400000, guid: b7bce22438d8e44debd07db13a1762c9, type: 2}
 --- !u!114 &7870376759330972918
 MonoBehaviour:
   m_ObjectHideFlags: 0
