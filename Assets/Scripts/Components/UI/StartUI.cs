@@ -10,7 +10,8 @@ public class StartUI : MonoBehaviour
     [SerializeField] GameEvent gameStartEvent;
     [SerializeField] GameEvent gameCreateEvent;
     [SerializeField] GameEvent gameJoinEvent;
-
+    [SerializeField] GameObject horse;
+    
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -20,7 +21,7 @@ public class StartUI : MonoBehaviour
         var codeInput = root.Q<TextField>("title-game-options-join-input");
         codeInput.SetEnabled(false);
 
-        var hostButton = root.Q<Button>("title-game-host");
+        var hostButton = root.Q<Button>("title-game-options-host-button");
         hostButton.SetEnabled(false);
         
         var joinButton = root.Q<Button>("title-game-options-join-button");
@@ -61,7 +62,7 @@ public class StartUI : MonoBehaviour
             
             var playerName = nameInput.value;
             gameState.players[index] = new Player(index, playerName);
-            
+            horse.SetActive(false);
             gameCreateEvent.Invoke();
             gameStartEvent.Invoke();
         };
@@ -84,6 +85,7 @@ public class StartUI : MonoBehaviour
     public void OnGameAvailable()
     {
         Debug.Log("Game available!");
+        horse.SetActive(false);
         gameStartEvent.Invoke();
     }
     

@@ -3,8 +3,6 @@
 .screen {
     height: 100%;
     width: 100%;
-    background-color: #4C5A66;
-    color: black;
     justify-content: center;
     align-items: center;
 }
@@ -20,8 +18,8 @@
     color: white;
     -unity-font-style: bold;
     transition: all 0.5s ease;
-    width: 300px;
-    font-size: 30px;
+    width: 250px;
+    font-size: 24px;
     margin: 15px 0;
 }
 
@@ -51,9 +49,15 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 100%;
+    
+    background-color: rgba(56, 65, 71, 0.7);
+    border-width: 1px 0;
+    border-color: black;
 }
 
 #title-game-error {
+    margin-top: 50px;
     color: red;
     font-size: 24px;
 }
@@ -69,26 +73,21 @@
 }
 
 #title-game-options {
-    margin: 25px 0;
-    width: 80%;
-    background-color: rgba(0, 0, 0, 0.3);
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    
+    margin-top: 50px;
+    width: 80%;
+}
+
+#title-game-options-host, #title-game-options-join {
+    width: 300px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.3);
     border-width: 1px;
     border-color: black;
     border-radius: 15px;
-}
-
-#title-game-options-or-label {
-    color: #C5A660;
-    font-size: 30px;
-}
-
-#title-game-options-join {
-    margin: 25px 0;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -103,5 +102,5 @@
     font-size: 16px;
     margin-top: 50px;
     -unity-text-align: middle-center;
-    color: black;
+    color: white;
 }
