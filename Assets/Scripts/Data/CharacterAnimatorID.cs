@@ -2,9 +2,10 @@ using UnityEngine;
 
 public static class CharacterAnimatorID
 {
-    public static readonly int blockAttack = Animator.StringToHash("BlockAttack");
-    public static readonly int die = Animator.StringToHash("Die");
-    public static readonly int enemyAttackFailure = Animator.StringToHash("EnemyAttackFailure");
-    public static readonly int enemyAttackSuccess = Animator.StringToHash("EnemyAttackSuccess");
-    public static readonly int heroAttack = Animator.StringToHash("HeroAttack");
+    public static readonly int blockAttack = Animator.StringToHash("blockAttack");
+    public static readonly int die = Animator.StringToHash("die");
+    public static readonly int enemyAttackFailure = Animator.StringToHash("enemyAttackFailure");
+    public static readonly int enemyAttackSuccess = Animator.StringToHash("enemyAttackSuccess");
+    public static readonly int heroAttack = Animator.StringToHash("heroAttack");
+    public static readonly int isMoving = Animator.StringToHash("isMoving");
 }

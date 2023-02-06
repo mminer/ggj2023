@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
     [SerializeField] GameState gameState;
+    [SerializeField] float moveDurationSeconds = 1;
 
     public bool isDefending;
     public Vector3Int position => Vector3Int.RoundToInt(transform.position);
@@ -17,14 +18,14 @@ public class Hero : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void ApplyCard(Card card)
+    public IEnumerator ApplyCard(Card card)
     {
         Debug.Log($"Applying card: {card}");
 
         switch (card)
         {
             case Card.Attack:
-                Attack();
+                yield return Attack();
                 break;
 
             case Card.Defend:
@@ -35,30 +36,32 @@ public class Hero : MonoBehaviour
                 break;
 
             case Card.MoveEast:
-                Move(Vector3Int.right);
+                yield return Move(Vector3Int.right);
                 break;
 
             case Card.MoveNorth:
-                Move(Vector3Int.forward);
+                yield return Move(Vector3Int.forward);
                 break;
 
             case Card.MoveRandom:
                 var randomDirection = MiscUtility.GetRandomDirection(gameState.rng);
                 Debug.Log($"Result of random direction card: {randomDirection}");
-                Move(randomDirection);
+                yield return Move(randomDirection);
                 break;
 
             case Card.MoveSouth:
-                Move(Vector3Int.back);
+                yield return Move(Vector3Int.back);
                 break;
 
             case Card.MoveWest:
-                Move(Vector3Int.left);
+                yield return Move(Vector3Int.left);
                 break;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(card), card, null);
         }
+
+        yield break;
     }
 
     public void BlockAttack()
@@ -66,8 +69,9 @@ public class Hero : MonoBehaviour
         animator.SetTrigger(CharacterAnimatorID.blockAttack);
     }
 
-    void Attack()
+    IEnumerator Attack()
     {
+        isDefending = false;
         animator.SetTrigger(CharacterAnimatorID.heroAttack);
 
         foreach (var adjacentPosition in gameState.dungeon.GetAdjacentPositions(position, true))
@@ -80,19 +84,26 @@ public class Hero : MonoBehaviour
             }
         }
 
-        isDefending = false;
+        yield return new WaitForSeconds(1);
     }
 
-    void Move(Vector3Int direction)
+    IEnumerator Move(Vector3Int direction)
     {
-        var newPosition = Vector3Int.RoundToInt(transform.position) + direction;
-
-        if (!gameState.dungeon.IsWalkable(newPosition))
-        {
-            return;
-        }
-
-        transform.position = newPosition;
         isDefending = false;
+
+        var newPosition = Vector3Int.RoundToInt(transform.position) + direction;
+        transform.LookAt(newPosition);
+
+        if (gameState.dungeon.IsWalkable(newPosition))
+        {
+            animator.SetBool(CharacterAnimatorID.isMoving, true);
+            yield return transform.MoveToPosition(newPosition, moveDurationSeconds);
+            animator.SetBool(CharacterAnimatorID.isMoving, false);
+        }
+        else
+        {
+            // TODO: play animation to show that player is against a wall
+            yield return new WaitForSeconds(1);
+        }
     }
 }

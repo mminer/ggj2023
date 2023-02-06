@@ -17,7 +17,7 @@ public class HeroEditor : Editor
 
             if (GUILayout.Button("Apply Card"))
             {
-                hero.ApplyCard(card);
+                hero.StartCoroutine(hero.ApplyCard(card));
             }
         }
     }

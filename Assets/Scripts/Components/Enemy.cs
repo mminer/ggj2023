@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] GameState gameState;
     [SerializeField] GameEvent gameOverEvent;
+    [SerializeField] float moveDurationSeconds = 1;
 
     public Vector3Int position => Vector3Int.RoundToInt(transform.position);
 
@@ -21,24 +22,28 @@ public class Enemy : MonoBehaviour
         FaceHero();
     }
 
-    public void MoveTowardsOrAttackHero()
+    public IEnumerator MoveTowardsOrAttackHero()
     {
         if (!gameState.dungeon.TryGetPath(position, gameState.hero.position, out var path))
         {
             Debug.LogWarning("No path from enemy to player. Should this be possible?");
-            return;
+            yield return null;
         }
 
         var newPosition = path.First();
 
         if (newPosition == gameState.hero.position)
         {
-            AttemptAttack();
+            yield return AttemptAttack();
         }
         else
         {
-            transform.position = newPosition;
+            animator.SetBool(CharacterAnimatorID.isMoving, true);
+            yield return transform.MoveToPosition(newPosition, moveDurationSeconds);
+            animator.SetBool(CharacterAnimatorID.isMoving, false);
         }
+
+        yield return new WaitForSeconds(1);
     }
 
     public void Die()
@@ -55,7 +60,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DieRoutine());
     }
 
-    void AttemptAttack()
+    IEnumerator AttemptAttack()
     {
         // Failed attack
         if (gameState.hero.isDefending)
@@ -69,6 +74,8 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger(CharacterAnimatorID.enemyAttackSuccess);
             gameOverEvent.Invoke();
         }
+
+        yield return new WaitForSeconds(1);
     }
 
     void FaceHero()

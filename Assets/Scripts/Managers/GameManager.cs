@@ -56,14 +56,13 @@ public class GameManager : MonoBehaviour
                     yield return new WaitForSeconds(cardApplyDelaySeconds);
                     var submitQueueAction = (RoundAction_SubmitQueue)gameState.latestRoundActionGroup[playerIndex];
                     var card = submitQueueAction.cards[queueIndex];
-                    gameState.hero.ApplyCard(card);
+                    yield return gameState.hero.ApplyCard(card);
                 }
             }
 
             foreach (var enemy in gameState.enemies)
             {
-                yield return new WaitForSeconds(cardApplyDelaySeconds);
-                enemy.MoveTowardsOrAttackHero();
+                yield return enemy.MoveTowardsOrAttackHero();
             }
 
             // Check win and loss conditions:
