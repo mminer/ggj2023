@@ -1,1 +1,102 @@
 @import url("unity-theme://default");
+
+.screen {
+    height: 100%;
+    width: 100%;
+    background-color: #4C5A66;
+    color: black;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-label {
+    color: #C5A660;
+    font-size: 26px;
+}
+
+.button {
+    background-color: #C5A660;
+    border-color: black;
+    color: white;
+    -unity-font-style: bold;
+    transition: all 0.5s ease;
+    width: 300px;
+    font-size: 30px;
+    margin: 15px 0;
+}
+
+.button:hover {
+    background-color: white;
+    color: #C5A660;
+}
+
+/* Title Screen */
+
+#title-subtitle {
+    font-size: 40px;
+    color: #C5A660;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+#title-label {
+    margin-bottom: 25px;
+    font-size: 60px;
+    color: #C5A660;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+#title-game {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#title-game-name-label {
+
+}
+
+#title-game-name-input {
+    width: 200px;
+    font-size: 24px;
+    -unity-text-align: center;
+}
+
+#title-game-options {
+    margin: 25px 0;
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.3);
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    
+    border-width: 1px;
+    border-color: black;
+    border-radius: 15px;
+}
+
+#title-game-options-or-label {
+    color: #C5A660;
+    font-size: 30px;
+}
+
+#title-game-options-join {
+    margin: 25px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-game-options-join-input {
+    width: 120px;
+    font-size: 24px;
+    -unity-text-align: middle-center;
+    text-transform: uppercase;
+}
+
+#title-credits {
+    font-size: 16px;
+    margin-top: 50px;
+    -unity-text-align: middle-center;
+    color: black;
+}

@@ -1,5 +1,8 @@
+using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class StartUI : MonoBehaviour
 {
@@ -11,25 +14,76 @@ public class StartUI : MonoBehaviour
     void Awake()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
+        var nameInput = root.Q<TextField>("title-game-name-input");
+        
+        var codeInput = root.Q<TextField>("title-game-options-join-input");
+        codeInput.SetEnabled(false);
 
-        root.Q<Button>("start-game").clicked += () =>
+        var hostButton = root.Q<Button>("title-game-host");
+        hostButton.SetEnabled(false);
+        
+        var joinButton = root.Q<Button>("title-game-options-join-button");
+        joinButton.SetEnabled(false);
+        
+        nameInput.RegisterCallback<KeyUpEvent>(e =>
+        {
+            var hasName = !string.IsNullOrWhiteSpace(nameInput.value);
+            hostButton.SetEnabled(hasName);
+            codeInput.SetEnabled(hasName);
+            
+            if (!hasName)
+            {
+                joinButton.SetEnabled(false);
+            }
+            else
+            {
+                codeInput.value = codeInput.value.ToUpper();
+                var validCode = HasValidGameCode(codeInput.value);
+                joinButton.SetEnabled(validCode);
+            }
+        });
+        
+        codeInput.RegisterCallback<KeyUpEvent>(e =>
+        {
+            codeInput.value = codeInput.value.ToUpper();
+            var validCode = HasValidGameCode(codeInput.value);
+            joinButton.SetEnabled(validCode);
+        });
+
+        hostButton.clicked += () =>
         {
             // This is the only time outside RandomNumberGenerator we should use UnityEngine.Random directly.
             gameState.randomSeed = Random.Range(0, Rules.maxRandomSeed);
 
-            gameState.localPlayerIndex = 0;
+            var index = 0;
+            gameState.localPlayerIndex = index;
+            
+            var playerName = nameInput.value;
+            gameState.players[index] = new Player(index, playerName);
+            
             gameCreateEvent.Invoke();
             gameStartEvent.Invoke();
         };
 
-        root.Q<Button>("join-game").clicked += () =>
+        joinButton.clicked += () =>
         {
-            var gameCodeField = root.Q<TextField>("game-code");
-            gameState.randomSeed = GameCodeUtility.GameCodeToRandomSeed(gameCodeField.value);
+            var gameCode = codeInput.value.ToUpper();
+            gameState.randomSeed = GameCodeUtility.GameCodeToRandomSeed(gameCode);
 
-            gameState.localPlayerIndex = 1;
+            var index = 1;
+            gameState.localPlayerIndex = index;
+            
+            var playerName = nameInput.value;
+            gameState.players[index] = new Player(index, playerName);
+            
             gameJoinEvent.Invoke();
             gameStartEvent.Invoke();
         };
+    }
+
+    bool HasValidGameCode(string gameCode)
+    {
+        Regex r = new Regex(@"^[A-Fa-f0-9xXyYwW]{4}$");
+        return r.IsMatch(gameCode.Trim());
     }
 }

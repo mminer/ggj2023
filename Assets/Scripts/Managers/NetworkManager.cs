@@ -14,7 +14,8 @@ public class NetworkManager : MonoBehaviour
 
     public void CreateGame()
     {
-      var playerSchema = new PlayerSchema(gameState.localPlayerIndex, "Player1", 0);
+      var localPlayer = gameState.localPlayer;
+      var playerSchema = new PlayerSchema(localPlayer.index, localPlayer.name, 0);
       var gameCode = GetGameCode();
       var gameSchema = new GameSchema(gameCode);
       Database.CreateGame(gameSchema, playerSchema);
@@ -24,7 +25,8 @@ public class NetworkManager : MonoBehaviour
 
     public void JoinGame()
     {
-      var playerSchema = new PlayerSchema(1, "Player2", 0);
+      var localPlayer = gameState.localPlayer;
+      var playerSchema = new PlayerSchema(localPlayer.index, localPlayer.name, 0);
       var gameCode = GetGameCode();
       Database.JoinGame(gameCode, playerSchema);
       Database.ListenForHistory(gameCode, OnHistoryAdded);

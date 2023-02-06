@@ -1,6 +1,24 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Button text="Start New Game" display-tooltip-when-elided="true" name="start-game" />
-    <ui:Label tabindex="-1" text="or" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; color: rgb(255, 255, 255);" />
-    <ui:TextField picking-mode="Ignore" label="Game Code" name="game-code" style="-unity-text-align: upper-center;" />
-    <ui:Button text="Join Existing Game" display-tooltip-when-elided="true" name="join-game" />
+    <ui:VisualElement name="title" class="screen">
+        <ui:Label name="title-subtitle" text="Too Many" />
+        <ui:Label name="title-label" text="Horse Whisperers" />
+
+        <ui:VisualElement name="title-game">
+            <ui:Label name="title-game-name-label" class="input-label" text="Name" />
+            <ui:TextField name="title-game-name-input" tabindex="0" max-length="10" />
+
+            <ui:VisualElement name="title-game-options">
+                <ui:Button name="title-game-host" tabindex="1" class="button" text="Host New Game" />
+                <ui:Label name="title-game-options-or-label" text="OR" />
+                <ui:VisualElement name="title-game-options-join">
+                    <ui:Label name="title-game-options-join-label" class="input-label" text="Code" />
+                    <ui:TextField name="title-game-options-join-input" tabindex="2" max-length="4" />
+                    <ui:Button name="title-game-options-join-button" tabindex="3" class="button" text="Join Game" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label name="join-inputs-error" text="" />
+        </ui:VisualElement>
+        <ui:Label name="title-credits" text="Created by Matthew Miner and Brad Keys\nGlobal Game Jam 2023" />
+    </ui:VisualElement>
 </ui:UXML>
