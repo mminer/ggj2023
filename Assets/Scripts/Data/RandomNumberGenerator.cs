@@ -35,6 +35,12 @@ public class RandomNumberGenerator : IRandom
         return random.Next(2) == 1;
     }
 
+    public double NextDouble()
+    {
+        timesUsed++;
+        return random.NextDouble();
+    }
+
     public void Restore(RandomState state)
     {
         randomSeed = state.Seed[0];

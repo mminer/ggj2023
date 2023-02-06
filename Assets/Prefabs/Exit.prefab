@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8, g: 0.7372549, b: 0.5458824, a: 0.8}
+      maxColor: {r: 0.62055326, g: 0.47430825, b: 1, a: 0.8}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9691,14 +9691,14 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.99215686, g: 0.81830066, b: 0.47058818, a: 1}
-  m_Intensity: 0
-  m_Range: 4
+  m_Color: {r: 0.6151619, g: 0.47058818, b: 0.99215686, a: 1}
+  m_Intensity: 2
+  m_Range: 30
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -9965,7 +9965,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.958, g: 0.8743651, b: 0.6386667, a: 0.69803923}
+      maxColor: {r: 0.5930696, g: 0.47058818, b: 0.99215686, a: 0.69803923}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.87058824, b: 0.4862745, a: 1}
@@ -14896,7 +14896,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.958, g: 0.8743651, b: 0.6386667, a: 0.69803923}
+      maxColor: {r: 0.6156863, g: 0.47058824, b: 0.99215686, a: 0.69803923}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.87058824, b: 0.4862745, a: 1}
@@ -19638,6 +19638,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4d82b4d43084c4fcebe83691350856a2, type: 3}
       propertyPath: m_Name
       value: trapdoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4d82b4d43084c4fcebe83691350856a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
