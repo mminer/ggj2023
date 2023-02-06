@@ -6,6 +6,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [SerializeField] GameState gameState;
+    [SerializeField] ParticleSystem attackFX;
     [SerializeField] float moveDurationSeconds = 1;
 
     public bool isDefending;
@@ -73,7 +74,9 @@ public class Hero : MonoBehaviour
     {
         isDefending = false;
         animator.SetTrigger(CharacterAnimatorID.heroAttack);
+        attackFX.Play();
 
+        /*
         foreach (var adjacentPosition in gameState.dungeon.GetAdjacentPositions(position, true))
         {
             var enemy = gameState.enemies.FirstOrDefault(enemy => enemy.position == adjacentPosition);
@@ -83,6 +86,7 @@ public class Hero : MonoBehaviour
                 enemy.Die();
             }
         }
+        */
 
         yield return new WaitForSeconds(1);
     }
