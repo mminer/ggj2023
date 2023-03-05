@@ -1,4 +1,9 @@
-# Global Game Jam 2023
+# Too Many Horse Whisperers
+
+A cooperative dungeon crawler card game built in Unity for Global Game Jam 2023.
+By Brad Keys and Matthew Miner.
+
+![Screenshot](Screenshot.png)
 
 ## Assets
 
